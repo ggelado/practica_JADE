@@ -40,7 +40,7 @@ for m_path in model_paths:
 print(f"\n[INFO] Total modelos cargados: {len(models)}\n")
 
 # =========================
-# 🔥 NUEVO: MOSTRAR CATEGORÍAS DE CADA MODELO
+# MOSTRAR CATEGORÍAS DE CADA MODELO
 # =========================
 
 print("\n==============================")
