@@ -6,19 +6,93 @@ from pathlib import Path
 import cv2
 import os
 
-MODEL_PATH = "best.pt"
+# =========================
+# CONFIG
+# =========================
+
+MODELS_DIR = "models"
 TEST_DIR = "testDir"
 OUTPUT_DIR = "output"
 
 VALID_EXTENSIONS = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
 
-print("[INFO] Cargando modelo...")
-model = YOLO(MODEL_PATH)
+# =========================
+# LOAD MODELS
+# =========================
 
-print(f"[INFO] Tipo de modelo: {model.task}")
-print("[INFO] Modelo cargado correctamente\n")
+print("[INFO] Buscando modelos en carpeta models/...")
+
+model_paths = [
+    f for f in Path(MODELS_DIR).iterdir()
+    if f.suffix.lower() == ".pt"
+]
+
+if not model_paths:
+    print("[ERROR] No se encontraron modelos en /models")
+    exit()
+
+models = {}
+
+for m_path in model_paths:
+    print(f"[INFO] Cargando modelo: {m_path.name}")
+    models[m_path.name] = YOLO(str(m_path))
+
+print(f"\n[INFO] Total modelos cargados: {len(models)}\n")
+
+# =========================
+# 🔥 NUEVO: MOSTRAR CATEGORÍAS DE CADA MODELO
+# =========================
+
+print("\n==============================")
+print(" MODELOS Y SUS CATEGORÍAS")
+print("==============================\n")
+
+for name, model in models.items():
+
+    try:
+        names = model.names  # dict id -> class name
+
+        categories = [str(v) for v in names.values()]
+
+        print(f"[MODEL] {name}")
+        print(f"Classes ({len(categories)}):")
+        for c in categories:
+            print(" -", c)
+        print()
+
+    except Exception as e:
+        print(f"[WARN] No se pudieron leer clases de {name}: {e}")
+
+# =========================
+# POSITIVE MAP
+# =========================
+
+POSITIVE_MAP = {
+    "gore.pt": {"blood"},
+    "nazi.pt": {"nazi-symbol"},
+    "violence.pt": {"violence"},
+}
+
+# =========================
+# NEGATIVE FILTER
+# =========================
+
+NEGATIVE_KEYWORDS = {
+    "non",
+    "no_",
+    "not",
+    "safe"
+}
+
+# =========================
+# OUTPUT SETUP
+# =========================
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+# =========================
+# LOAD IMAGES
+# =========================
 
 test_path = Path(TEST_DIR)
 
@@ -27,6 +101,14 @@ images = [
     if f.suffix.lower() in VALID_EXTENSIONS
 ]
 
+if not images:
+    print("[INFO] No hay imágenes")
+    exit()
+
+# =========================
+# INFERENCE
+# =========================
+
 for img_path in images:
 
     print("=" * 60)
@@ -34,46 +116,100 @@ for img_path in images:
 
     image = cv2.imread(str(img_path))
 
-    results = model(str(img_path))
+    if image is None:
+        print(f"[ERROR] No se pudo leer: {img_path}")
+        continue
 
-    result = results[0]
+    detected_labels = set()
+    triggers = []
+    positives_report = []
 
-    if result.probs is not None:
+    for model_name, model in models.items():
 
-        top1_index = result.probs.top1
-        top1_conf = result.probs.top1conf.item()
+        results = model(str(img_path))
+        result = results[0]
 
-        class_name = result.names[top1_index]
+        # =========================
+        # CLASSIFICATION
+        # =========================
 
-        print(f"[RESULT] {class_name}")
-        print(f"[CONF]   {top1_conf:.4f}")
+        if hasattr(result, "probs") and result.probs is not None:
 
-        # Texto sobre imagen
-        label = f"{class_name} {top1_conf:.2f}"
+            top1 = result.probs.top1
+            conf = float(result.probs.top1conf.item())
+            class_name = result.names[top1].lower().strip()
 
-        color = (0, 0, 255)
+            if any(n in class_name for n in NEGATIVE_KEYWORDS):
+                continue
 
-        cv2.putText(
-            image,
-            label,
-            (20, 40),
-            cv2.FONT_HERSHEY_SIMPLEX,
-            1,
-            color,
-            2
-        )
+            if class_name in POSITIVE_MAP.get(model_name, set()):
+                detected_labels.add(class_name)
+                triggers.append(f"{model_name}:{class_name}")
+                positives_report.append(f"{class_name} ({conf:.2f})")
 
-    output_path = os.path.join(
-        OUTPUT_DIR,
-        f"classified_{img_path.name}"
-    )
+        # =========================
+        # DETECTION
+        # =========================
 
-    cv2.imwrite(output_path, image)
+        elif hasattr(result, "boxes") and result.boxes is not None:
 
-    cv2.imshow("Classification", image)
+            for box in result.boxes:
 
-    cv2.waitKey(0)
+                cls_id = int(box.cls[0])
+                conf = float(box.conf[0])
+                class_name = result.names[cls_id].lower().strip()
 
-cv2.destroyAllWindows()
+                if any(n in class_name for n in NEGATIVE_KEYWORDS):
+                    continue
+
+                if class_name in POSITIVE_MAP.get(model_name, set()):
+                    detected_labels.add(class_name)
+                    triggers.append(f"{model_name}:{class_name}")
+                    positives_report.append(f"{class_name} ({conf:.2f})")
+
+                # dibujo
+                x1, y1, x2, y2 = map(int, box.xyxy[0])
+
+                cv2.rectangle(image, (x1, y1), (x2, y2), (0, 0, 255), 2)
+
+                cv2.putText(
+                    image,
+                    f"{class_name} {conf:.2f}",
+                    (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.6,
+                    (0, 0, 255),
+                    2
+                )
+
+    # =========================
+    # SAFE LOGIC
+    # =========================
+
+    is_safe = len(detected_labels) == 0
+
+    if is_safe:
+        detected_labels.add("safe")
+
+    for label in detected_labels:
+
+        folder = os.path.join(OUTPUT_DIR, label)
+        os.makedirs(folder, exist_ok=True)
+
+        out_path = os.path.join(folder, img_path.name)
+        cv2.imwrite(out_path, image)
+
+        print(f"[SAVED] {out_path}")
+
+    print("\n[RESULT SUMMARY]")
+
+    if is_safe:
+        print("SAFE IMAGE")
+    else:
+        print("POSITIVE DETECTIONS:")
+        for p in positives_report:
+            print(" -", p)
+
+        print(f"[TRIGGERS] {triggers}")
 
 print("\n[INFO] Test finalizado")

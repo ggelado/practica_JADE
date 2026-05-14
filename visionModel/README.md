@@ -1,8 +1,10 @@
 Pruebas del Agente de Visión:
 
-Modelo utilizado:
+Modelos utilizados:
 
-	https://huggingface.co/zhiwei2017/yolo11s-cls-nazi-symbols/tree/main/yolo11s-cls-nazi-symbol-detection/weights
+- https://huggingface.co/zhiwei2017/yolo11s-cls-nazi-symbols/tree/main/yolo11s-cls-nazi-symbol-detection/weights
+- https://huggingface.co/Falconsai/nsfw_image_detection/tree/main
+- https://github.com/Musawer1214/Fight-Violence-detection-yolov8
 
 Este modelo se encarga de la detección de simbología nazi. Se trata de un modelo preentrenado (no lo hemos entrenado
 nosotros).
