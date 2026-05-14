@@ -12,7 +12,8 @@ de GitHub.
 
 ---
 
-# ¿Cómo ejecutar?
+# ¿Cómo ejecutar? (instrucciones para bash, bte similares en otros SO)
+
 
 WIP: Imagen docker
 
@@ -22,7 +23,14 @@ WIP: Imagen docker
 python -m venv ./venv
 ```
 
-2. Instalar dependencias (una vez accedido al entorno virtual)
+2. Acceder al entorno virtual
+
+```bash
+source ./venv/Scripts/activate
+```
+
+3. Instalar dependencias
+
 
 ```bash
 pip install -r requirements.txt
