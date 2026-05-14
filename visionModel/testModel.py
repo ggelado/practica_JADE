@@ -1,4 +1,4 @@
-# (c) ggelado. Co-Authored by OpenAI ChatGPT Free. 14/05/2026 
+# (c) ggelado. Co-Authored by OpenAI ChatGPT Free. 14/05/2026
 # Conversation ID 6a05e141-1ac0-8328-8a32-21abf1412fca
 
 from ultralytics import YOLO
@@ -22,10 +22,7 @@ VALID_EXTENSIONS = (".jpg", ".jpeg", ".png", ".bmp", ".webp")
 
 print("[INFO] Buscando modelos en carpeta models/...")
 
-model_paths = [
-    f for f in Path(MODELS_DIR).iterdir()
-    if f.suffix.lower() == ".pt"
-]
+model_paths = [f for f in Path(MODELS_DIR).iterdir() if f.suffix.lower() == ".pt"]
 
 if not model_paths:
     print("[ERROR] No se encontraron modelos en /models")
@@ -71,18 +68,36 @@ POSITIVE_MAP = {
     "gore.pt": {"blood"},
     "nazi.pt": {"nazi-symbol"},
     "violence.pt": {"violence"},
+    "fight.pt": {"violence", "fight"},
+    "arms.pt": {"gun"},
+    "arms2.pt": {
+        "ak47",
+        "m4a1-s",
+        "m4a1",
+        "galil",
+        "famas",
+        "tec-9",
+        "five-seven",
+        "glock-18",
+        "usp-s",
+        "eagle",
+        "berettas",
+        "p2000",
+        "mac10",
+        "mp5",
+        "mp9",
+        "p90",
+        "p250",
+        "ssg08",
+        "awp",
+    },
 }
 
 # =========================
 # NEGATIVE FILTER
 # =========================
 
-NEGATIVE_KEYWORDS = {
-    "non",
-    "no_",
-    "not",
-    "safe"
-}
+NEGATIVE_KEYWORDS = {"non", "no_", "not", "safe"}
 
 # =========================
 # OUTPUT SETUP
@@ -96,10 +111,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 test_path = Path(TEST_DIR)
 
-images = [
-    f for f in test_path.iterdir()
-    if f.suffix.lower() in VALID_EXTENSIONS
-]
+images = [f for f in test_path.iterdir() if f.suffix.lower() in VALID_EXTENSIONS]
 
 if not images:
     print("[INFO] No hay imágenes")
@@ -179,7 +191,7 @@ for img_path in images:
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.6,
                     (0, 0, 255),
-                    2
+                    2,
                 )
 
     # =========================
