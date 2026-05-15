@@ -37,3 +37,18 @@ source ./venv/Scripts/activate
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+# ¿Cómo ejecutar? (instrucciones para Docker)
+
+```bash
+# Construir la imagen
+docker build -t vision-model .
+
+# Ejecutar el contenedor
+docker run vision-model
+
+# O con volúmenes (sintáxis windows)
+docker run -v %cd%\output:/app/output vision-model
+```
