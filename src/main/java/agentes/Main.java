@@ -33,7 +33,8 @@ public class Main {
         // Se ejecuta cuando el bot ya está conectado y listo para escuchar mensajes.
         System.out.println("Bot iniciado y escuchando mensajes");
     }
-
+    
+    //Lee token.env para usar token de bot de discord
     private static Map<String, String> loadConfig(Path file) {
         Map<String, String> values = new HashMap<>();
 

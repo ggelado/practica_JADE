@@ -20,5 +20,14 @@ public class AgentePerceptor extends ListenerAdapter {
         // Imprime en consola quién habló, en qué canal y qué escribió
         System.out.println("[Perceptor] Mensaje recibido en #" + canal
                 + " de " + autor + ": " + contenido);
+
+        // Detecion de imagenes
+        event.getMessage().getAttachments().forEach(attachment -> {
+            if (attachment.isImage()) {
+                String imageUrl = attachment.getUrl();
+                System.out.println("[Perceptor] Imagen detectada en #" + canal
+                        + " de " + autor + ": " + imageUrl);
+            }
+        });
     }
 }
