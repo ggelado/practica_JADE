@@ -3,13 +3,13 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import sys
 import tempfile
 import urllib.request
 from pathlib import Path
 from urllib.parse import urlparse
 
 from ultralytics import YOLO
-
 
 BASE_DIR = Path(__file__).resolve().parent
 MODELS_DIR = BASE_DIR / "models"
@@ -48,39 +48,41 @@ POSITIVE_MAP = {
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the vision safety models on one image")
-    source = parser.add_mutually_exclusive_group(required=True)
-    source.add_argument("--image", help="Local image path")
-    source.add_argument("--url", help="Image URL")
+    parser.add_argument("--url", required=True, help="Image URL (http:// or https://)")
     return parser.parse_args()
 
 
 def download_url(url: str) -> Path:
-    suffix = Path(urlparse(url).path).suffix or ".jpg"
+    parsed = urlparse(url)
+    suffix = Path(parsed.path).suffix or ".jpg"
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError("URL must start with http:// or https://")
+
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
     temp_file.close()
 
-    with urllib.request.urlopen(url) as response, open(temp_file.name, "wb") as output:
+    with urllib.request.urlopen(url, timeout=15) as response, open(temp_file.name, "wb") as output:
         shutil.copyfileobj(response, output)
 
     return Path(temp_file.name)
 
 
-def load_models() -> dict[str, YOLO]:
+def load_models():
     model_paths = sorted(path for path in MODELS_DIR.iterdir() if path.suffix.lower() == ".pt")
     if not model_paths:
         raise SystemExit(f"No se encontraron modelos .pt en {MODELS_DIR}")
 
-    models: dict[str, YOLO] = {}
+    models = {}
     for model_path in model_paths:
         models[model_path.name] = YOLO(str(model_path))
 
     return models
 
 
-def analyze_image(image_path: Path, models: dict[str, YOLO]) -> dict:
-    detected_labels: set[str] = set()
-    triggers: list[str] = []
-    positives_report: list[str] = []
+def analyze_image(image_path: Path, models: dict) -> dict:
+    detected_labels = set()
+    triggers = []
+    positives_report = []
 
     for model_name, model in models.items():
         results = model(str(image_path))
@@ -119,35 +121,37 @@ def analyze_image(image_path: Path, models: dict[str, YOLO]) -> dict:
         "safe": is_safe,
         "detections": sorted(detected_labels),
         "positives": positives_report,
-        "triggers": triggers,
-        "image": str(image_path),
+        "triggers": triggers
     }
 
 
-def main() -> None:
+def main():
     args = parse_args()
-    models = load_models()
-
-    temp_path: Path | None = None
+    temp_path = None
     try:
-        if args.url:
-            temp_path = download_url(args.url)
-            image_path = temp_path
-            source = args.url
-        else:
-            image_path = Path(args.image).expanduser().resolve()
-            source = str(image_path)
+        temp_path = download_url(args.url)
+        image_path = temp_path
+        source = args.url
+
+        models = load_models()
 
         if not image_path.exists():
-            raise SystemExit(f"No se pudo encontrar la imagen: {source}")
+            raise RuntimeError(f"No se pudo encontrar la imagen: {source}")
 
         result = analyze_image(image_path, models)
         result["source"] = source
-
         print(json.dumps(result, ensure_ascii=False))
+
+    except Exception as e:
+        print(json.dumps({"error": str(e), "source": getattr(args, "url", None)}), flush=True)
+        sys.exit(1)
+
     finally:
         if temp_path is not None:
-            temp_path.unlink(missing_ok=True)
+            try:
+                temp_path.unlink(missing_ok=True)
+            except Exception:
+                pass
 
 
 if __name__ == "__main__":
