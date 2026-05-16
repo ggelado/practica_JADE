@@ -72,14 +72,4 @@ public class AgenteVisualizador extends Agent {
     }
   }
 
-  private AnalysisRequest resolveRequest(ACLMessage msg) throws IOException {
-// TODO
-    return null;
-  }
-
-  private String analyzeWithVisionModel(AnalysisRequest request) throws IOException, InterruptedException {
-//TODO
-    return null;
-  }
-
 }
