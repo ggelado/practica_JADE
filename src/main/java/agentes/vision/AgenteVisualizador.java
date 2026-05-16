@@ -1,4 +1,4 @@
-package vision;
+package agentes.vision;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
