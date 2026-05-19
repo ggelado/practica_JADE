@@ -1,7 +1,4 @@
-from __future__ import annotations
-
 import argparse
-import json
 import shutil
 import sys
 import tempfile
@@ -79,7 +76,7 @@ def load_models():
     return models
 
 
-def analyze_image(image_path: Path, models: dict) -> dict:
+def analyze_image(image_path: Path, models: dict) -> list[str]:
     detected_labels = set()
 
     for model_name, model in models.items():
@@ -109,7 +106,7 @@ def analyze_image(image_path: Path, models: dict) -> dict:
                 if class_name in POSITIVE_MAP.get(model_name, set()):
                     detected_labels.add(class_name)
 
-    return {"detections": sorted(detected_labels)}
+    return sorted(detected_labels)
 
 
 def main():
@@ -126,7 +123,7 @@ def main():
             raise RuntimeError(f"No se pudo encontrar la imagen: {source}")
 
         result = analyze_image(image_path, models)
-        print(json.dumps(result, ensure_ascii=False))
+        print(",".join(result))
 
     except Exception as e:
         print(json.dumps({"error": str(e), "source": getattr(args, "url", None)}), flush=True)
