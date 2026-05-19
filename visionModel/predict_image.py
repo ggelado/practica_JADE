@@ -81,8 +81,6 @@ def load_models():
 
 def analyze_image(image_path: Path, models: dict) -> dict:
     detected_labels = set()
-    triggers = []
-    positives_report = []
 
     for model_name, model in models.items():
         results = model(str(image_path))
@@ -98,8 +96,6 @@ def analyze_image(image_path: Path, models: dict) -> dict:
 
             if class_name in POSITIVE_MAP.get(model_name, set()):
                 detected_labels.add(class_name)
-                triggers.append(f"{model_name}:{class_name}")
-                positives_report.append(f"{class_name} ({confidence:.2f})")
 
         elif hasattr(result, "boxes") and result.boxes is not None:
             for box in result.boxes:
@@ -112,17 +108,8 @@ def analyze_image(image_path: Path, models: dict) -> dict:
 
                 if class_name in POSITIVE_MAP.get(model_name, set()):
                     detected_labels.add(class_name)
-                    triggers.append(f"{model_name}:{class_name}")
-                    positives_report.append(f"{class_name} ({confidence:.2f})")
 
-    is_safe = len(detected_labels) == 0
-
-    return {
-        "safe": is_safe,
-        "detections": sorted(detected_labels),
-        "positives": positives_report,
-        "triggers": triggers
-    }
+    return {"detections": sorted(detected_labels)}
 
 
 def main():
@@ -139,7 +126,6 @@ def main():
             raise RuntimeError(f"No se pudo encontrar la imagen: {source}")
 
         result = analyze_image(image_path, models)
-        result["source"] = source
         print(json.dumps(result, ensure_ascii=False))
 
     except Exception as e:
