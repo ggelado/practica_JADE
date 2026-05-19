@@ -43,6 +43,19 @@ public class AgenteVisualizador extends Agent {
                   // vuelve al bucle
         }
 
+        try {
+          DiscordMessage discordMessage = resolveDiscordMessage(msg);
+          String result = analyzeWithVisionModel(discordMessage.getMensaje());
+          List<DiscordMessage.Detecciones> detecciones = extractDetections(result);
+          for (DiscordMessage.Detecciones deteccion : detecciones) {
+            discordMessage.agregarDetecciones(deteccion);
+          }
+          sendToClassifier(discordMessage);
+
+
+        } catch (Exception exception) {
+          System.err.println("Error procesando mensaje: " + exception.getMessage());
+        }
       }
     });
   }
