@@ -2,6 +2,7 @@ import argparse
 import shutil
 import sys
 import tempfile
+import json
 import urllib.request
 from pathlib import Path
 from urllib.parse import urlparse
@@ -58,7 +59,11 @@ def download_url(url: str) -> Path:
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
     temp_file.close()
 
-    with urllib.request.urlopen(url, timeout=15) as response, open(temp_file.name, "wb") as output:
+    # Use a browser-like User-Agent to avoid CDN rejecting non-browser requests (403)
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0 Safari/537.36"
+    })
+    with urllib.request.urlopen(req, timeout=15) as response, open(temp_file.name, "wb") as output:
         shutil.copyfileobj(response, output)
 
     return Path(temp_file.name)
