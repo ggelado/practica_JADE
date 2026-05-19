@@ -110,4 +110,26 @@ public class AgenteVisualizador extends Agent {
 
     return result;
   }
+
+  private static List<DiscordMessage.Detecciones> extractDetections(String rawOutput) {
+    if (rawOutput == null) {
+      return List.of(); // Lista vacía
+    }
+
+    String rawCategories = rawOutput.trim(); // Sin espacios
+    if (rawCategories.isEmpty()) {
+      return List.of(); // Lista vacía
+    }
+
+    List<DiscordMessage.Detecciones> categories = new ArrayList<>();
+    for (String token : rawCategories.split(",")) {
+      String category = token.trim();
+      DiscordMessage.Detecciones deteccion = DiscordMessage.Detecciones.fromLabel(category);
+      if (deteccion != null) {
+        categories.add(deteccion);
+      }
+    }
+
+    return categories;
+  }
 }
