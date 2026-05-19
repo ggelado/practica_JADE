@@ -1,22 +1,23 @@
 package agentes.vision;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import jade.core.Agent;
-import jade.core.Profile;
-import jade.core.ProfileImpl;
-import jade.core.Runtime;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+import model.DiscordMessage;
 
 public class AgenteVisualizador extends Agent {
 
@@ -70,6 +71,14 @@ public class AgenteVisualizador extends Agent {
     } catch (FIPAException exception) {
       throw new IllegalStateException("No se pudo registrar el agente de visión", exception);
     }
+  }
+
+
+  private DiscordMessage resolveDiscordMessage(ACLMessage msg) throws UnreadableException {
+    if (msg.getContentObject() instanceof DiscordMessage discordMessage) {
+      return discordMessage;
+    }
+    throw new IllegalArgumentException("El mensaje recibido no es válido");
   }
 
 }
