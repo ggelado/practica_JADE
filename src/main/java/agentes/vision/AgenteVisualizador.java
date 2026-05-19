@@ -142,9 +142,26 @@ public class AgenteVisualizador extends Agent {
     }
 
     int exitCode = process.waitFor();
-    String result = output.toString();
+    String fullOutput = output.toString();
+    String result = fullOutput.trim();
+
+    // La última línea de la salida contiene los resultados
+    String lastLine = null;
+    String[] lines = fullOutput.split("\r?\n");
+    for (int i = lines.length - 1; i >= 0; i--) {
+      String l = lines[i].trim();
+      if (!l.isEmpty()) {
+        lastLine = l;
+        break;
+      }
+    }
+    if (lastLine != null) {
+      result = lastLine;
+    }
     if (exitCode != 0) {
-      throw new IOException("No se pudo procesar la imagen");
+      String msg = "No se pudo procesar la imagen (exitCode=" + exitCode + ") - salida: " + result;
+      System.err.println("[AgenteVisualizador] " + msg);
+      throw new IOException(msg);
     }
 
     return result;
