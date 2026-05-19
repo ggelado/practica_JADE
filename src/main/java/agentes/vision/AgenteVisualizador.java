@@ -132,4 +132,24 @@ public class AgenteVisualizador extends Agent {
 
     return categories;
   }
+
+  private void sendToClassifier(DiscordMessage discordMessage) throws IOException, FIPAException {
+    
+      DFAgentDescription template = new DFAgentDescription();
+      ServiceDescription service = new ServiceDescription();
+      service.setType("clasificador");
+      template.addServices(service);
+
+      DFAgentDescription[] agents = DFService.search(this, template);
+      if (agents.length == 0) {
+        throw new RuntimeException("No se encontró ningún clasificador.");
+      }
+
+      ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+      message.addReceiver(agents[0].getName());
+      message.setContentObject(discordMessage);
+      send(message);
+    
+  }
+
 }
