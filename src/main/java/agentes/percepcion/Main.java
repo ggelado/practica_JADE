@@ -1,4 +1,4 @@
-package agentes;
+package agentes.percepcion;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
