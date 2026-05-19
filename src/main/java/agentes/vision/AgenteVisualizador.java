@@ -24,6 +24,7 @@ public class AgenteVisualizador extends Agent {
   private static final String SERVICE_TYPE = "vision-safety";
   private static final String SERVICE_NAME = "Servicio-Vision-Seguridad";
   private static final Path PYTHON_SCRIPT = Path.of("visionModel", "predict_image.py");
+  private static final String PYTHON_EXECUTABLE = "python"; // podría ser python3, actualizar en consecuencia
 
   @Override
   protected void setup() {
@@ -81,4 +82,32 @@ public class AgenteVisualizador extends Agent {
     throw new IllegalArgumentException("El mensaje recibido no es válido");
   }
 
+  private String analyzeWithVisionModel(String imageUrl) throws IOException, InterruptedException {
+    ProcessBuilder processBuilder = new ProcessBuilder(
+        PYTHON_EXECUTABLE,
+        PYTHON_SCRIPT.toString(),
+        "--url",
+        imageUrl);
+
+
+    Process process = processBuilder.start();
+    StringBuilder output = new StringBuilder();
+
+    try (InputStream inputStream = process.getInputStream();
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+        BufferedReader reader = new BufferedReader(inputStreamReader)) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        output.append(line);
+      }
+    }
+
+    int exitCode = process.waitFor();
+    String result = output.toString();
+    if (exitCode != 0) {
+      throw new IOException("No se pudo procesar la imagen");
+    }
+
+    return result;
+  }
 }
