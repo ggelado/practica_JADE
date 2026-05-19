@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -24,11 +27,21 @@ public class AgenteVisualizador extends Agent {
   private static final String SERVICE_TYPE = "vision-safety";
   private static final String SERVICE_NAME = "Servicio-Vision-Seguridad";
   private static final Path PYTHON_SCRIPT = Path.of("visionModel", "predict_image.py");
-  private static final String PYTHON_EXECUTABLE = "python"; // podría ser python3, actualizar en consecuencia
+  private static final String PYTHON_ENV_VAR = "VISION_PYTHON_PATH";
+
+  // Valor resuelto en setup()
+  private String pythonExecutable;
 
   @Override
   protected void setup() {
     System.out.println("Hola! El agente [" + getAID().getName() + "] ya está despertando.");
+
+    Map<String, String> config = loadConfig(Path.of("token.env"));
+    String py = config.get(PYTHON_ENV_VAR);
+    if (py == null || py.isBlank()) {
+      throw new IllegalStateException("Define VISION_PYTHON_PATH en token.env");
+    }
+    this.pythonExecutable = py;
 
     registerService(); // Registrar el servicio y darlo de alta
 
