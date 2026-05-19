@@ -58,6 +58,11 @@ public class AgenteVisualizador extends Agent {
 
         try {
           DiscordMessage discordMessage = resolveDiscordMessage(msg);
+
+          System.out.println("[AgenteVisualizador] Mensaje recibido -> id: " + discordMessage.getId()
+              + " | mensaje(url): " + discordMessage.getMensaje()
+              + " | detecciones-previas: " + discordMessage.getDetecciones());
+
           String result = analyzeWithVisionModel(discordMessage.getMensaje());
           List<DiscordMessage.Detecciones> detecciones = extractDetections(result);
           for (DiscordMessage.Detecciones deteccion : detecciones) {
