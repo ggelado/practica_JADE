@@ -109,12 +109,20 @@ public class AgenteVisualizador extends Agent {
   }
 
   private String analyzeWithVisionModel(String imageUrl) throws IOException, InterruptedException {
-    ProcessBuilder processBuilder = new ProcessBuilder(
-        PYTHON_EXECUTABLE,
-        PYTHON_SCRIPT.toString(),
-        "--url",
-        imageUrl);
 
+    Path scriptPath = PYTHON_SCRIPT;
+    if (!scriptPath.isAbsolute()) { // Hacer que la ruta al script sea absoluta
+      scriptPath = Path.of(System.getProperty("user.dir")).resolve(scriptPath);
+    }
+
+    ProcessBuilder processBuilder = new ProcessBuilder(
+      this.pythonExecutable,
+      scriptPath.toString(),
+      "--url",
+      imageUrl);
+
+
+    processBuilder.redirectErrorStream(true);
 
     Process process = processBuilder.start();
     StringBuilder output = new StringBuilder();
@@ -124,7 +132,7 @@ public class AgenteVisualizador extends Agent {
         BufferedReader reader = new BufferedReader(inputStreamReader)) {
       String line;
       while ((line = reader.readLine()) != null) {
-        output.append(line);
+        output.append(line).append('\n');
       }
     }
 
