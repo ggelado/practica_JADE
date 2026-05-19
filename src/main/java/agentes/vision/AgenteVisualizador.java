@@ -171,7 +171,6 @@ public class AgenteVisualizador extends Agent {
     if (rawOutput == null) {
       return List.of(); // Lista vacía
     }
-
     String rawCategories = rawOutput.trim(); // Sin espacios
     if (rawCategories.isEmpty()) {
       return List.of(); // Lista vacía
@@ -189,23 +188,59 @@ public class AgenteVisualizador extends Agent {
     return categories;
   }
 
+
+  private static Map<String, String> loadConfig(Path file) {
+    Map<String, String> values = new HashMap<>();
+
+    if (!Files.exists(file)) {
+      return values;
+    }
+
+    try {
+      List<String> lines = Files.readAllLines(file, StandardCharsets.UTF_8);
+
+      for (String line : lines) {
+        String trimmed = line.trim();
+        if (trimmed.isEmpty() || trimmed.startsWith("#") || !trimmed.contains("=")) {
+          continue;
+        }
+
+        String[] parts = trimmed.split("=", 2);
+        values.put(parts[0].trim(), parts[1].trim());
+      }
+    } catch (IOException exception) {
+      throw new IllegalStateException("No se pudo leer token.env", exception);
+    }
+
+    return values;
+  }
+
   private void sendToClassifier(DiscordMessage discordMessage) throws IOException, FIPAException {
     
-      DFAgentDescription template = new DFAgentDescription();
-      ServiceDescription service = new ServiceDescription();
-      service.setType("clasificador");
-      template.addServices(service);
+    System.out.println("[AgenteVisualizador] Contenido a enviar -> id: " + discordMessage.getId()
+        + " | url: " + discordMessage.getMensaje()
+        + " | detecciones: " + discordMessage.getDetecciones());
 
-      DFAgentDescription[] agents = DFService.search(this, template);
-      if (agents.length == 0) {
-        throw new RuntimeException("No se encontró ningún clasificador.");
-      }
+    DFAgentDescription template = new DFAgentDescription();
+    ServiceDescription service = new ServiceDescription();
+    service.setType("clasificador");
+    template.addServices(service);
 
-      ACLMessage message = new ACLMessage(ACLMessage.INFORM);
-      message.addReceiver(agents[0].getName());
-      message.setContentObject(discordMessage);
-      send(message);
-    
+    DFAgentDescription[] agents = DFService.search(this, template);
+    if (agents.length == 0) {
+      throw new RuntimeException("No se encontró ningún clasificador.");
+    }
+
+    // Log del contenido que se enviará
+    System.out.println("[AgenteVisualizador] Preparando envío al clasificador: receiver=" + agents[0].getName());
+
+
+    ACLMessage message = new ACLMessage(ACLMessage.INFORM);
+    message.addReceiver(agents[0].getName());
+    message.setContentObject(discordMessage);
+    send(message);
+
+    System.out.println("[AgenteVisualizador] Envío completado al clasificador (id: " + discordMessage.getId() + ")");
   }
 
 }
