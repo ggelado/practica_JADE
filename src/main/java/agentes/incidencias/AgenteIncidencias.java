@@ -1,4 +1,4 @@
-package agentes;
+package agentes.incidencias;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
