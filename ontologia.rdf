@@ -8,8 +8,7 @@
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      xmlns:swrl="http://www.w3.org/2003/11/swrl#"
      xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
-     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
->
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#">
     <owl:Ontology rdf:about="http://www.discord.monitor/ontologia"/>
     
 
@@ -266,6 +265,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#alertaSaludMental">
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#AlertaSaludMental"/>
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
     </owl:NamedIndividual>
     
 
@@ -273,6 +273,7 @@
     <!-- http://www.discord.monitor/ontologia#det_anxiety -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_anxiety">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
     </owl:NamedIndividual>
     
@@ -281,6 +282,7 @@
     <!-- http://www.discord.monitor/ontologia#det_blood -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_blood">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
     </owl:NamedIndividual>
     
@@ -289,6 +291,7 @@
     <!-- http://www.discord.monitor/ontologia#det_depression -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_depression">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
     </owl:NamedIndividual>
     
@@ -297,6 +300,7 @@
     <!-- http://www.discord.monitor/ontologia#det_discrimination -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_discrimination">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
     </owl:NamedIndividual>
     
@@ -305,6 +309,7 @@
     <!-- http://www.discord.monitor/ontologia#det_fight -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_fight">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
     </owl:NamedIndividual>
     
@@ -313,6 +318,7 @@
     <!-- http://www.discord.monitor/ontologia#det_greeting -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_greeting">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
     </owl:NamedIndividual>
     
@@ -321,6 +327,7 @@
     <!-- http://www.discord.monitor/ontologia#det_gun -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_gun">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Arma"/>
     </owl:NamedIndividual>
     
@@ -329,6 +336,7 @@
     <!-- http://www.discord.monitor/ontologia#det_help -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_help">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
     </owl:NamedIndividual>
     
@@ -337,6 +345,7 @@
     <!-- http://www.discord.monitor/ontologia#det_link -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_link">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
     </owl:NamedIndividual>
     
@@ -345,6 +354,7 @@
     <!-- http://www.discord.monitor/ontologia#det_loneliness -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_loneliness">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
     </owl:NamedIndividual>
     
@@ -353,6 +363,7 @@
     <!-- http://www.discord.monitor/ontologia#det_mention -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_mention">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
     </owl:NamedIndividual>
     
@@ -361,6 +372,7 @@
     <!-- http://www.discord.monitor/ontologia#det_nazi -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_nazi">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
     </owl:NamedIndividual>
     
@@ -369,6 +381,7 @@
     <!-- http://www.discord.monitor/ontologia#det_positive -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_positive">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
     </owl:NamedIndividual>
     
@@ -377,6 +390,7 @@
     <!-- http://www.discord.monitor/ontologia#det_question -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_question">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
     </owl:NamedIndividual>
     
@@ -385,6 +399,7 @@
     <!-- http://www.discord.monitor/ontologia#det_scam -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_scam">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaGrave"/>
     </owl:NamedIndividual>
     
@@ -393,6 +408,7 @@
     <!-- http://www.discord.monitor/ontologia#det_self_harm -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_self_harm">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalCritica"/>
     </owl:NamedIndividual>
     
@@ -401,6 +417,7 @@
     <!-- http://www.discord.monitor/ontologia#det_spam -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_spam">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaLeve"/>
     </owl:NamedIndividual>
     
@@ -409,6 +426,7 @@
     <!-- http://www.discord.monitor/ontologia#det_toxic -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_toxic">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Toxica"/>
     </owl:NamedIndividual>
     
@@ -417,6 +435,7 @@
     <!-- http://www.discord.monitor/ontologia#det_violence -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_violence">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaGrave"/>
     </owl:NamedIndividual>
     
@@ -433,6 +452,7 @@
     <!-- http://www.discord.monitor/ontologia#riesgoCritico -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoCritico">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoCritico"/>
     </owl:NamedIndividual>
     
@@ -441,6 +461,7 @@
     <!-- http://www.discord.monitor/ontologia#riesgoGrave -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoGrave">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoGrave"/>
     </owl:NamedIndividual>
     
@@ -449,6 +470,7 @@
     <!-- http://www.discord.monitor/ontologia#riesgoLeve -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoLeve">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoLeve"/>
     </owl:NamedIndividual>
     
@@ -457,6 +479,7 @@
     <!-- http://www.discord.monitor/ontologia#riesgoModerado -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoModerado">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoModerado"/>
     </owl:NamedIndividual>
     
@@ -465,6 +488,7 @@
     <!-- http://www.discord.monitor/ontologia#sinRiesgo -->
 
     <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#sinRiesgo">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
         <rdf:type rdf:resource="http://www.discord.monitor/ontologia#SinRiesgo"/>
     </owl:NamedIndividual>
     
