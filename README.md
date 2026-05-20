@@ -30,6 +30,8 @@ Analiza las imágenes adjuntas para evitar la distribución de contenido prohibi
 * **Implementación:** Para garantizar precisión y rendimiento, el agente `VisionAnalyzer` delega el procesamiento pesado consumiendo una API de visión externa (como Google Cloud Vision / SafeSearch). El agente extrae la URL de la imagen de Discord y realiza la petición HTTP.
 * **Acción:** El agente procesa el JSON de respuesta. Si los índices de probabilidad de contenido explícito o simbología de odio son altos, se coordina mediante mensajes ACL con el `DiscordListener` para eliminar el mensaje original y notifica al Agente Clasificador para que registre la infracción.
 
+* **Respuesta visual:** Cuando se detecta contenido inapropiado, el sistema puede publicar en el canal original una imagen bonita configurable mediante `SAFE_IMAGE_URL` en `token.env` para suavizar la intervención del bot.
+
 ## Requisitos e Instalación
 
 *(Por redactar)*
