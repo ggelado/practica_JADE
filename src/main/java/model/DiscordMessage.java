@@ -81,11 +81,13 @@ public class DiscordMessage implements Serializable {
   
   private final String mensaje;
   private final String id_mensaje;
+  private final String channelId;
   private final List<Detecciones> findings;
   
-  public DiscordMessage(String msg, String id) {
+  public DiscordMessage(String msg, String id, String chId) {
     this.mensaje = Objects.requireNonNullElse(msg, "");
     this.id_mensaje = Objects.requireNonNullElse(id, "");
+    this.channelId  = Objects.requireNonNullElse(chId, "");
     this.findings = new ArrayList<>();
   }
   
@@ -94,6 +96,9 @@ public class DiscordMessage implements Serializable {
   }
   public String getId() {
     return id_mensaje;
+  }
+  public String getChannelId() {
+	  return channelId;
   }
   
   public void agregarDetecciones(Detecciones deteccion) {

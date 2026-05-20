@@ -64,7 +64,7 @@ public class AgentePerceptor extends Agent {
                                     System.out.println("[Perceptor] Imagen detectada en #" + canal
                                             + " de " + autor + ": " + imageUrl);
                                     try {
-                                        sendImageToVisionAgent(imageUrl, event.getMessageId());
+                                        sendImageToVisionAgent(imageUrl, event.getMessageId(), event.getChannel().getId());
                                     } catch (Exception e) {
                                         System.err.println("Error enviando imagen a AgenteVisualizador: " + e.getMessage());
                                     }
@@ -120,8 +120,8 @@ public class AgentePerceptor extends Agent {
         return new File(System.getProperty("user.dir"));
     }
 
-    private void sendImageToVisionAgent(String imageUrl, String messageId) throws IOException, FIPAException {
-        DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId);
+    private void sendImageToVisionAgent(String imageUrl, String messageId, String channelId) throws IOException, FIPAException {
+        DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId, channelId);
 
         DFAgentDescription template = new DFAgentDescription();
         ServiceDescription sd = new ServiceDescription();
