@@ -1,5 +1,10 @@
 package agentes.clasificador;
 import model.DiscordMessage;
+
+import org.apache.jena.ontology.OntModel;
+import org.apache.jena.ontology.OntModelSpec;
+import org.apache.jena.rdf.model.ModelFactory;
+
 import jade.core.Agent;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -47,8 +52,14 @@ public class AgenteClasificador extends Agent {
 	           }
 
 				private String clasificarMensaje(DiscordMessage discordMsg) {
-					// TODO Auto-generated method stub
-					return null;
+					 // Cargar ontología
+			        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+			        try (InputStream in = new FileInputStream(ONTOLOGY_PATH)) {
+			            model.read(in, null, "RDF/XML");
+			        } catch (Exception e) {
+			            System.err.println("[AgenteClasificador] Error cargando ontología: " + e.getMessage());
+			            return "SinClasificar";
+			        }
 				}
 
 				private void reenviarSegunNivel(DiscordMessage discordMsg, String nivel) {
