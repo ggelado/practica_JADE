@@ -147,7 +147,7 @@ public class AgenteClasificador extends Agent {
 
     private void reenviarSegunNivel(DiscordMessage msg, String nivel) {
         switch (nivel) {
-            case "riesgoCritico":
+            case "riesgoCritico"://elimino y aviso 
             case "riesgoGrave":
                 enviarAIncidencias(msg);
                 break;
@@ -155,7 +155,7 @@ public class AgenteClasificador extends Agent {
                 System.out.println("[AgenteClasificador] Alerta de salud mental detectada -> id: " + msg.getId());
                 enviarAIncidencias(msg);
                 break;
-            case "riesgoModerado":
+            case "riesgoModerado"://elimino
             case "riesgoLeve":
                 System.out.println("[AgenteClasificador] Riesgo moderado/leve registrado -> id: " + msg.getId());
                 break;
