@@ -118,4 +118,41 @@ public class AgenteClasificador extends Agent {
             throw new IllegalStateException("No se pudo registrar el AgenteClasificador", e);
         }
     }
+    
+    private OntClass getClaseDeteccion(OntModel model, DiscordMessage.Detecciones d) {
+        switch (d) {
+            case GUN:
+                return model.getOntClass(NS + "DeteccionArma");
+            case BLOOD:
+            case FIGHT:
+                return model.getOntClass(NS + "DeteccionViolenciaLeve");
+            case VIOLENCE:
+                return model.getOntClass(NS + "DeteccionViolenciaGrave");
+            case NAZI:
+            case DISCRIMINATION:
+                return model.getOntClass(NS + "DeteccionOdio");
+            case TOXIC:
+                return model.getOntClass(NS + "DeteccionToxica");
+            case SPAM:
+                return model.getOntClass(NS + "DeteccionMolestaLeve");
+            case SCAM:
+                return model.getOntClass(NS + "DeteccionMolestaGrave");
+            case DEPRESSION:
+            case ANXIETY:
+            case LONELINESS:
+                return model.getOntClass(NS + "DeteccionSaludMentalAlerta");
+            case SELF_HARM:
+                return model.getOntClass(NS + "DeteccionSaludMentalCritica");
+            case QUESTION:
+            case LINK:
+            case MENTION:
+                return model.getOntClass(NS + "DeteccionNeutra");
+            case HELP:
+            case POSITIVE:
+            case GREETING:
+                return model.getOntClass(NS + "DeteccionPositiva");
+            default:
+                return null;
+        }
+    }
 }
