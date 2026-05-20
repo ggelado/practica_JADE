@@ -1,0 +1,2269 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.discord.monitor/ontologia#"
+     xml:base="http://www.discord.monitor/ontologia"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+     xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+     xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+     xmlns:autogen0="http://www.discord.monitor/ontologia#">
+    <owl:Ontology rdf:about="http://www.discord.monitor/ontologia"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled -->
+
+    <owl:AnnotationProperty rdf:about="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#tieneDeteccion -->
+
+    <owl:ObjectProperty rdf:about="http://www.discord.monitor/ontologia#tieneDeteccion">
+        <rdfs:domain rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+        <rdfs:range rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#tieneNivel -->
+
+    <owl:ObjectProperty rdf:about="http://www.discord.monitor/ontologia#tieneNivel">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+        <rdfs:range rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#mensajeId -->
+
+    <owl:DatatypeProperty rdf:about="http://www.discord.monitor/ontologia#mensajeId">
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#textoMensaje -->
+
+    <owl:DatatypeProperty rdf:about="http://www.discord.monitor/ontologia#textoMensaje"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#AlertaSaludMental -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#AlertaSaludMental">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Deteccion -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Deteccion"/>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#DeteccionMolestaGrave -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#DeteccionMolestaGrave">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#DeteccionMolestaLeve -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#DeteccionMolestaLeve">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#DeteccionSaludMentalCritica -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#DeteccionSaludMentalCritica">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#DeteccionViolenciaGrave -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#DeteccionViolenciaGrave">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#DeteccionViolenciaLeve -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Deteccion_Arma -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Deteccion_Arma">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Deteccion_Neutra -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Deteccion_Neutra">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Deteccion_Odio -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Deteccion_Odio">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Deteccion_Positiva -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Deteccion_Positiva">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Deteccion_Toxica -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Deteccion_Toxica">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#Deteccion"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#Mensaje -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#Mensaje"/>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#NivelRiesgo -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#RiesgoCritico -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#RiesgoCritico">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#RiesgoGrave -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#RiesgoGrave">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#RiesgoLeve -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#RiesgoLeve">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#RiesgoModerado -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#RiesgoModerado">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#SinRiesgo -->
+
+    <owl:Class rdf:about="http://www.discord.monitor/ontologia#SinRiesgo">
+        <rdfs:subClassOf rdf:resource="http://www.discord.monitor/ontologia#NivelRiesgo"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#alertaSaludMental -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#alertaSaludMental">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#AlertaSaludMental"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_anxiety -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_anxiety">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_blood -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_blood">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_depression -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_depression">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_discrimination -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_discrimination">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_fight -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_fight">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_greeting -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_greeting">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_gun -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_gun">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Arma"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_help -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_help">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_link -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_link">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_loneliness -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_loneliness">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_mention -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_mention">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_nazi -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_nazi">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_positive -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_positive">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_question -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_question">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_scam -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_scam">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaGrave"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_self_harm -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_self_harm">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalCritica"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_spam -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_spam">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaLeve"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_toxic -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_toxic">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Toxica"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#det_violence -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#det_violence">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaGrave"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#mensaje_prueba_001 -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#mensaje_prueba_001">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#riesgoCritico -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoCritico">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoCritico"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#riesgoGrave -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoGrave">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoGrave"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#riesgoLeve -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoLeve">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoLeve"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#riesgoModerado -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#riesgoModerado">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#RiesgoModerado"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.discord.monitor/ontologia#sinRiesgo -->
+
+    <owl:NamedIndividual rdf:about="http://www.discord.monitor/ontologia#sinRiesgo">
+        <rdf:type rdf:resource="http://www.discord.monitor/ontologia#SinRiesgo"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Rules
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description rdf:about="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description rdf:about="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3">
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Variable"/>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>MolestaG</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaGrave"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoModerado"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Scam dirigido a persona vulnerable</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaGrave"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Mensaje positivo anula alerta leve de salud mental</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoLeve"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Persona vulnerable siendo atacada</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Toxica"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>SaludG</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalCritica"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Persona pidiendo ayuda</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalCritica"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#alertaSaludMental"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>ViolenciaG</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaGrave"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoGrave"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>S3</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Arma"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaGrave"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>ViolenciaL</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoModerado"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>S1</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Arma</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Arma"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoGrave"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>S4</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Arma"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Neutra</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#sinRiesgo"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Spam disfrazado de amabilidad</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaGrave"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoModerado"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Odio</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Acoso ideológico</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Odio"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Toxica"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Positiva</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#sinRiesgo"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Toxico</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Toxica"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoModerado"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>MolestaL</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaLeve"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoLeve"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>S2</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaLeve"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaLeve"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoModerado"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>Tres detecciones negativas distintas</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Toxica"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionMolestaLeve"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                <rdf:first>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionViolenciaLeve"/>
+                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                                                    </rdf:Description>
+                                                                </rdf:first>
+                                                                <rdf:rest>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                        <rdf:first>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                                            </rdf:Description>
+                                                                        </rdf:first>
+                                                                        <rdf:rest>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                <rdf:first>
+                                                                                    <rdf:Description>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                                                                    </rdf:Description>
+                                                                                </rdf:first>
+                                                                                <rdf:rest>
+                                                                                    <rdf:Description>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                        <rdf:first>
+                                                                                            <rdf:Description>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                                                                            </rdf:Description>
+                                                                                        </rdf:first>
+                                                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                                                    </rdf:Description>
+                                                                                </rdf:rest>
+                                                                            </rdf:Description>
+                                                                        </rdf:rest>
+                                                                    </rdf:Description>
+                                                                </rdf:rest>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#riesgoCritico"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>SaludL</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#alertaSaludMental"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+    <rdf:Description>
+        <swrla:isRuleEnabled rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</swrla:isRuleEnabled>
+        <rdfs:comment></rdfs:comment>
+        <rdfs:label>S5</rdfs:label>
+        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#Imp"/>
+        <swrl:body>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Mensaje"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                        <rdf:first>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                            </rdf:Description>
+                        </rdf:first>
+                        <rdf:rest>
+                            <rdf:Description>
+                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                <rdf:first>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                    </rdf:Description>
+                                </rdf:first>
+                                <rdf:rest>
+                                    <rdf:Description>
+                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                        <rdf:first>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                                                <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneDeteccion"/>
+                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                            </rdf:Description>
+                                        </rdf:first>
+                                        <rdf:rest>
+                                            <rdf:Description>
+                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                <rdf:first>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#DeteccionSaludMentalAlerta"/>
+                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                    </rdf:Description>
+                                                </rdf:first>
+                                                <rdf:rest>
+                                                    <rdf:Description>
+                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                        <rdf:first>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Neutra"/>
+                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                            </rdf:Description>
+                                                        </rdf:first>
+                                                        <rdf:rest>
+                                                            <rdf:Description>
+                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                <rdf:first>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#ClassAtom"/>
+                                                                        <swrl:classPredicate rdf:resource="http://www.discord.monitor/ontologia#Deteccion_Positiva"/>
+                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                                                    </rdf:Description>
+                                                                </rdf:first>
+                                                                <rdf:rest>
+                                                                    <rdf:Description>
+                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                        <rdf:first>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                                            </rdf:Description>
+                                                                        </rdf:first>
+                                                                        <rdf:rest>
+                                                                            <rdf:Description>
+                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                <rdf:first>
+                                                                                    <rdf:Description>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d2"/>
+                                                                                        <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                                                                    </rdf:Description>
+                                                                                </rdf:first>
+                                                                                <rdf:rest>
+                                                                                    <rdf:Description>
+                                                                                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                                                                                        <rdf:first>
+                                                                                            <rdf:Description>
+                                                                                                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom"/>
+                                                                                                <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d1"/>
+                                                                                                <swrl:argument2 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/d3"/>
+                                                                                            </rdf:Description>
+                                                                                        </rdf:first>
+                                                                                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                                                                    </rdf:Description>
+                                                                                </rdf:rest>
+                                                                            </rdf:Description>
+                                                                        </rdf:rest>
+                                                                    </rdf:Description>
+                                                                </rdf:rest>
+                                                            </rdf:Description>
+                                                        </rdf:rest>
+                                                    </rdf:Description>
+                                                </rdf:rest>
+                                            </rdf:Description>
+                                        </rdf:rest>
+                                    </rdf:Description>
+                                </rdf:rest>
+                            </rdf:Description>
+                        </rdf:rest>
+                    </rdf:Description>
+                </rdf:rest>
+            </rdf:Description>
+        </swrl:body>
+        <swrl:head>
+            <rdf:Description>
+                <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#AtomList"/>
+                <rdf:first>
+                    <rdf:Description>
+                        <rdf:type rdf:resource="http://www.w3.org/2003/11/swrl#IndividualPropertyAtom"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.discord.monitor/ontologia#tieneNivel"/>
+                        <swrl:argument1 rdf:resource="http://www.semanticweb.org/fabio/ontologies/2026/4/untitled-ontology-2/m"/>
+                        <swrl:argument2 rdf:resource="http://www.discord.monitor/ontologia#alertaSaludMental"/>
+                    </rdf:Description>
+                </rdf:first>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            </rdf:Description>
+        </swrl:head>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+
