@@ -74,9 +74,20 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>run-jade</id>
+                        <phase>none</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <mainClass>agentes.Main</mainClass>
-                    <classpathScope>runtime</classpathScope>
+                    <executable>bash</executable>
+                    <arguments>
+                        <argument>run-jade.sh</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>

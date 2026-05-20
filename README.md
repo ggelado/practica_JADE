@@ -38,7 +38,11 @@ Analiza las imágenes adjuntas para evitar la distribución de contenido prohibi
 
 ## Instrucciones de Ejecución
 
-*(Por redactar)*
+Ejecutar
+
+```bash
+./run-jade.sh
+```
 
 ## Identificación del Grupo
 *(Grupo ns sabe todavía.)*
