@@ -23,6 +23,7 @@ public class AgentePerceptor extends Agent {
     private static final String TOKEN_ENV = "token.env";
     private static final String DISCORD_TOKEN_KEY = "DISCORD_TOKEN";
     private static final String VISION_SERVICE_TYPE = "vision-safety";
+    private static final String ANALISTA_SERVICE_TYPE = "analista-texto";
 
     private transient JDA jda;
 
@@ -70,6 +71,14 @@ public class AgentePerceptor extends Agent {
                                     }
                                 }
                             });
+
+                            if (contenido != null && !contenido.isBlank()) {
+                                try {
+                                    sendTextToAnalystAgent(contenido, event.getMessageId(), event.getChannel().getId());
+                                } catch (Exception e) {
+                                    System.err.println("Error enviando texto a AgenteAnalista: " + e.getMessage());
+                                }
+                            }
                         }
                     })
                     .build();
@@ -138,6 +147,26 @@ public class AgentePerceptor extends Agent {
         msg.setContentObject(discordMessage);
         send(msg);
         System.out.println("[Perceptor] Enviado mensaje a AgenteVisualizador: " + imageUrl);
+    }
+
+    private void sendTextToAnalystAgent(String text, String messageId, String channelId) throws IOException, FIPAException {
+        DiscordMessage discordMessage = new DiscordMessage(text, messageId, channelId);
+
+        DFAgentDescription template = new DFAgentDescription();
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(ANALISTA_SERVICE_TYPE);
+        template.addServices(sd);
+
+        DFAgentDescription[] agents = DFService.search(this, template);
+        if (agents == null || agents.length == 0) {
+            throw new RuntimeException("No se encontró AgenteAnalista con el servicio '" + ANALISTA_SERVICE_TYPE + "'.");
+        }
+
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        msg.addReceiver(agents[0].getName());
+        msg.setContentObject(discordMessage);
+        send(msg);
+        System.out.println("[Perceptor] Enviado texto a AgenteAnalista: " + text);
     }
 
 }
