@@ -156,24 +156,27 @@ public class AgenteClasificador extends Agent {
     private void reenviarSegunNivel(DiscordMessage msg, String nivel) {
         System.out.println("[AgenteClasificador] reenviarSegunNivel -> id: " + msg.getId() + " | nivel: " + nivel);
         switch (nivel) {
-            case "riesgoCritico"://elimino y aviso 
-                enviarASancionador(msg);
+            case "riesgoCritico":
+                enviarASancionador(msg);  // elimina mensaje
+                enviarAIncidencias(msg);  // avisa admin
+                break;
             case "riesgoGrave":
-                enviarAIncidencias(msg);
+                enviarASancionador(msg);  // elimina mensaje
+                enviarAIncidencias(msg);  // avisa admin
                 break;
             case "alertaSaludMental":
-                System.out.println("[AgenteClasificador] Alerta de salud mental detectada -> id: " + msg.getId());
-                enviarAIncidencias(msg);
+                enviarAIncidencias(msg);  // avisa admin con mensaje de apoyo
                 break;
-            case "riesgoModerado"://elimino
+            case "riesgoModerado":
+                enviarASancionador(msg);  // solo elimina mensaje
+                break;
             case "riesgoLeve":
-                System.out.println("[AgenteClasificador] Riesgo moderado/leve registrado -> id: " + msg.getId());
+                System.out.println("[AgenteClasificador] Riesgo leve -> advertencia en canal -> id: " + msg.getId());
                 break;
             default:
                 System.out.println("[AgenteClasificador] Mensaje sin riesgo -> id: " + msg.getId());
         }
     }
-
     private void enviarAIncidencias(DiscordMessage msg) {
         try {
             DFAgentDescription template = new DFAgentDescription();
