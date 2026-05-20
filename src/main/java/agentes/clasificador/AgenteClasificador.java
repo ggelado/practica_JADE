@@ -1,9 +1,13 @@
 package agentes.clasificador;
 import model.DiscordMessage;
 
+import org.apache.jena.ontology.Individual;
+import org.apache.jena.ontology.ObjectProperty;
+import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Statement;
 
 import jade.core.Agent;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -60,6 +64,35 @@ public class AgenteClasificador extends Agent {
 			            System.err.println("[AgenteClasificador] Error cargando ontología: " + e.getMessage());
 			            return "SinClasificar";
 			        }
+			        // Crear individuo Mensaje en la ontología
+			        OntClass clsMensaje = model.getOntClass(NS + "Mensaje");
+			        if (clsMensaje == null) {
+			            System.err.println("[AgenteClasificador] Clase Mensaje no encontrada en la ontología");
+			            return "SinClasificar";
+			        }
+			        Individual individuo = model.createIndividual(NS + "msg_" + msg.getId(), clsMensaje);
+			     // Añadir cada detección como individuo vinculado
+			        ObjectProperty tieneDeteccion = model.getObjectProperty(NS + "tieneDeteccion");
+			        
+			        for (DiscordMessage.Detecciones d : msg.getDetecciones()) {
+			            OntClass clsDeteccion = getClaseDeteccion(model, d);
+			            if (clsDeteccion != null) {
+			                Individual indDet = model.createIndividual(NS + "det_" + d.name().toLowerCase(), clsDeteccion);
+			                individuo.addProperty(tieneDeteccion, indDet);
+			                System.out.println("[AgenteClasificador] Añadida detección: " + d.name() + " -> " + clsDeteccion.getLocalName());
+			            }
+			        }
+			        // Consultar el nivel inferido por el razonador
+			        ObjectProperty tieneNivel = model.getObjectProperty(NS + "tieneNivel");
+			        Statement stmt = individuo.getProperty(tieneNivel);
+
+			        if (stmt != null) {
+			            String nivelUri = stmt.getObject().toString();
+			            // Devolver solo el nombre local (sin la URI completa)
+			            return nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
+			        }
+
+			        return "SinClasificar";
 				}
 
 				private void reenviarSegunNivel(DiscordMessage discordMsg, String nivel) {
