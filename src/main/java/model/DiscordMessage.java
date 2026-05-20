@@ -16,7 +16,7 @@ public class DiscordMessage implements Serializable {
     BLOOD,
     VIOLENCE,
     FIGHT,
-    NAZI, //TODO COMPLETAR TIPOS Y CATEGORÍAS CON LAS DE TEXTO
+    NAZI, 
 	 
     SPAM,
     SCAM,
