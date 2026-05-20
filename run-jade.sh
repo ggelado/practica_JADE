@@ -18,4 +18,6 @@ java -cp "$CLASSPATH" jade.Boot -gui \
     AgenteVisualizador:agentes.vision.AgenteVisualizador \
     AgentePerceptor:agentes.percepcion.AgentePerceptor \
     AgenteClasificador:agentes.clasificador.AgenteClasificador \
-    AgenteIncidencias:agentes.incidencias.AgenteIncidencias
+    AgenteIncidencias:agentes.incidencias.AgenteIncidencias \
+    AgenteSancionador:agentes.sancionador.AgenteSancionador \
+    AgenteAnalista:agentes.analista.AgenteAnalista
