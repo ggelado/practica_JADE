@@ -1,21 +1,23 @@
 package agentes.incidencias;
 
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
+
+import model.DiscordMessage;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.User;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAException;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
-import model.DiscordMessage;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
 
 public class AgenteIncidencias extends Agent {
 
@@ -30,21 +32,11 @@ public class AgenteIncidencias extends Agent {
     protected void setup() {
         System.out.println("Hola! El agente [" + getAID().getName() + "] ya está despertando.");
 
-        // Verificar si el archivo token.env existe
-        File envFile = new File(System.getProperty("user.dir"), TOKEN_ENV);
-        if (!envFile.exists() || !envFile.isFile()) {
-            System.err.println("[AgenteIncidencias] ERROR: El archivo token.env no existe o no es válido.");
-            doDelete();
-            return;
-        }
-
-        // Cargar valores del archivo token.env
-        String token = loadTokenFromFile(TOKEN_ENV);
-        this.adminId = loadTokenFromFile(TOKEN_ENV);
+        String token = loadValueFromEnv(DISCORD_TOKEN_KEY);
+        this.adminId = loadValueFromEnv(ADMIN_ID_KEY);
 
         if (token == null || token.isBlank() || adminId == null || adminId.isBlank()) {
             System.err.println("[AgenteIncidencias] ERROR: Falta DISCORD_TOKEN o ADMIN_DISCORD_ID en token.env");
-            doDelete();
             return;
         }
 
@@ -54,11 +46,9 @@ public class AgenteIncidencias extends Agent {
             System.out.println("[AgenteIncidencias] Conectado a Discord con éxito.");
         } catch (Exception e) {
             System.err.println("[AgenteIncidencias] No se pudo conectar a la API de Discord: " + e.getMessage());
-            doDelete();
             return;
         }
 
-        // Registrar el servicio en el DF
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID()); 
         ServiceDescription sd = new ServiceDescription();
@@ -71,8 +61,6 @@ public class AgenteIncidencias extends Agent {
             System.out.println("Agente registrado correctamente en el DF.");
         } catch (FIPAException fe) {
             fe.printStackTrace();
-            doDelete();
-            return;
         }
 
         // Filtro Bloqueante
@@ -131,23 +119,16 @@ public class AgenteIncidencias extends Agent {
     /**
      * Función para leer token.env
      */
-    private String loadTokenFromFile(String filename) {
-        File env = new File(filename);
-        if (!env.exists()) {
-            File alt = new File(getProjectRoot(), filename);
-            if (alt.exists()) {
-                env = alt;
-            } else {
-                return null;
-            }
-        }
+    private String loadValueFromEnv(String key) {
+        File env = new File(System.getProperty("user.dir"), TOKEN_ENV);
+        if (!env.exists()) return null;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(env))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (line.startsWith(DISCORD_TOKEN_KEY + "=")) {
-                    return line.substring((DISCORD_TOKEN_KEY + "=").length()).trim();
+                if (line.startsWith(key + "=")) {
+                    return line.substring((key + "=").length()).trim();
                 }
             }
         } catch (IOException e) {
@@ -156,24 +137,16 @@ public class AgenteIncidencias extends Agent {
         return null;
     }
 
-    private File getProjectRoot() {
-        return new File(System.getProperty("user.dir"));
-    }
-
     @Override
     protected void takeDown() {
         try {
-            if (DFService.search(this, new DFAgentDescription()).length > 0) {
-                DFService.deregister(this);
-                System.out.println("Agente desregistrado del DF.");
-            } else {
-                System.out.println("[AgenteIncidencias] No estaba registrado en el DF.");
-            }
+            DFService.deregister(this);
             if (jda != null) {
                 jda.shutdown();
             }
+            System.out.println("Agente desregistrado del DF.");
         } catch (FIPAException fe) {
-            System.err.println("[AgenteIncidencias] Error al intentar desregistrar: " + fe.getMessage());
+            fe.printStackTrace();
         }
     }
 }
