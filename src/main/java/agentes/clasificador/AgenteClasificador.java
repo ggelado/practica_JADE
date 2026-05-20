@@ -1,139 +1,113 @@
 package agentes.clasificador;
+
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+
 import model.DiscordMessage;
 
 import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.ObjectProperty;
 import org.apache.jena.ontology.OntClass;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.ontology.ObjectProperty;
 
-import jade.core.Agent;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
-import jade.domain.FIPAException;
-
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class AgenteClasificador extends Agent {
-	  private static final String SERVICE_TYPE = "clasificador";
-	  private static final String SERVICE_NAME = "Servicio-Clasificador";
-	  private static final String ONTOLOGY_PATH = "ontologia.rdf";
-	  private static final String NS = "http://www.discord.monitor/ontologia#";
 
-	  @Override
-	    protected void setup() {
-	    	 System.out.println("[AgenteClasificador] Arrancando: " + getAID().getName());
-	    	 registerService();
-	    	 addBehaviour(new CyclicBehaviour() {
-	              @Override
-	              public void action() {
-	              ACLMessage msg = receive();
-	              
-	              if (msg != null) {
-	                  try {
-	                      DiscordMessage discordMsg = (DiscordMessage) msg.getContentObject();
+    private static final String SERVICE_TYPE = "clasificador";
+    private static final String SERVICE_NAME = "Servicio-Clasificador";
+    private static final String ONTOLOGY_PATH = "ontologia.rdf";
+    private static final String NS = "http://www.discord.monitor/ontologia#";
 
-	                      System.out.println("[AgenteClasificador] Mensaje recibido -> id: "
-	                              + discordMsg.getId()
-	                              + " | detecciones: " + discordMsg.getDetecciones());
+    @Override
+    protected void setup() {
+        System.out.println("[AgenteClasificador] Arrancando: " + getAID().getName());
 
-	                      String nivel = clasificarMensaje(discordMsg);
+        registerService();
 
-	                      System.out.println("[AgenteClasificador] Nivel inferido: " + nivel);
+        addBehaviour(new CyclicBehaviour() {
+            @Override
+            public void action() {
+                ACLMessage msg = receive();
+                if (msg != null) {
+                    try {
+                        DiscordMessage discordMsg = (DiscordMessage) msg.getContentObject();
 
-	                      reenviarSegunNivel(discordMsg, nivel);
+                        System.out.println("[AgenteClasificador] Mensaje recibido -> id: "
+                                + discordMsg.getId()
+                                + " | detecciones: " + discordMsg.getDetecciones());
 
-	                  } catch (UnreadableException e) {
-	                      System.err.println("[AgenteClasificador] Error leyendo mensaje: " + e.getMessage());
-	                  }
-	              } else {
-	                  block();
-	              }
-	           }
+                        String nivel = clasificarMensaje(discordMsg);
 
-				private String clasificarMensaje(DiscordMessage discordMsg) {
-					 // Cargar ontología
-			        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
-			        try (InputStream in = new FileInputStream(ONTOLOGY_PATH)) {
-			            model.read(in, null, "RDF/XML");
-			        } catch (Exception e) {
-			            System.err.println("[AgenteClasificador] Error cargando ontología: " + e.getMessage());
-			            return "SinClasificar";
-			        }
-			        // Crear individuo Mensaje en la ontología
-			        OntClass clsMensaje = model.getOntClass(NS + "Mensaje");
-			        if (clsMensaje == null) {
-			            System.err.println("[AgenteClasificador] Clase Mensaje no encontrada en la ontología");
-			            return "SinClasificar";
-			        }
-			        Individual individuo = model.createIndividual(NS + "msg_" + msg.getId(), clsMensaje);
-			     // Añadir cada detección como individuo vinculado
-			        ObjectProperty tieneDeteccion = model.getObjectProperty(NS + "tieneDeteccion");
-			        
-			        for (DiscordMessage.Detecciones d : msg.getDetecciones()) {
-			            OntClass clsDeteccion = getClaseDeteccion(model, d);
-			            if (clsDeteccion != null) {
-			                Individual indDet = model.createIndividual(NS + "det_" + d.name().toLowerCase(), clsDeteccion);
-			                individuo.addProperty(tieneDeteccion, indDet);
-			                System.out.println("[AgenteClasificador] Añadida detección: " + d.name() + " -> " + clsDeteccion.getLocalName());
-			            }
-			        }
-			        // Consultar el nivel inferido por el razonador
-			        ObjectProperty tieneNivel = model.getObjectProperty(NS + "tieneNivel");
-			        Statement stmt = individuo.getProperty(tieneNivel);
+                        System.out.println("[AgenteClasificador] Nivel inferido: " + nivel);
 
-			        if (stmt != null) {
-			            String nivelUri = stmt.getObject().toString();
-			            // Devolver solo el nombre local (sin la URI completa)
-			            return nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
-			        }
+                        reenviarSegunNivel(discordMsg, nivel);
 
-			        return "SinClasificar";
-				}
-
-				private void reenviarSegunNivel(DiscordMessage msg, String nivel) {
-					switch (nivel) {
-		            case "riesgoCritico":
-		            case "riesgoGrave":
-		                enviarAIncidencias(msg);
-		                break;
-		            case "alertaSaludMental":
-		                System.out.println("[AgenteClasificador] Alerta de salud mental detectada -> id: " + msg.getId());
-		                enviarAIncidencias(msg);
-		                break;
-		            case "riesgoModerado":
-		            case "riesgoLeve":
-		                System.out.println("[AgenteClasificador] Riesgo moderado/leve registrado -> id: " + msg.getId());
-		                break;
-		            default:
-		                System.out.println("[AgenteClasificador] Mensaje sin riesgo -> id: " + msg.getId());
-		        }
-					
-				}
-	    	 
-	    	 
-	    
-    private void registerService() {
-        DFAgentDescription dfd = new DFAgentDescription();
-        dfd.setName(getAID());
-
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType(SERVICE_TYPE);
-        sd.setName(SERVICE_NAME);
-        dfd.addServices(sd);
-
-        try {
-            DFService.register(this, dfd);
-            System.out.println("[AgenteClasificador] Registrado en el DF como '" + SERVICE_TYPE + "'.");
-        } catch (FIPAException e) {
-            throw new IllegalStateException("No se pudo registrar el AgenteClasificador", e);
-        }
+                    } catch (UnreadableException e) {
+                        System.err.println("[AgenteClasificador] Error leyendo mensaje: " + e.getMessage());
+                    }
+                } else {
+                    block();
+                }
+            }
+        });
     }
-    
+
+    private String clasificarMensaje(DiscordMessage msg) {
+        // Cargar ontología
+        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+
+        try (InputStream in = new FileInputStream(ONTOLOGY_PATH)) {
+            model.read(in, null, "RDF/XML");
+        } catch (Exception e) {
+            System.err.println("[AgenteClasificador] Error cargando ontología: " + e.getMessage());
+            return "SinClasificar";
+        }
+
+        // Crear individuo Mensaje en la ontología
+        OntClass clsMensaje = model.getOntClass(NS + "Mensaje");
+        if (clsMensaje == null) {
+            System.err.println("[AgenteClasificador] Clase Mensaje no encontrada en la ontología");
+            return "SinClasificar";
+        }
+
+        Individual individuo = model.createIndividual(NS + "msg_" + msg.getId(), clsMensaje);
+
+        // Añadir cada detección como individuo vinculado
+        ObjectProperty tieneDeteccion = model.getObjectProperty(NS + "tieneDeteccion");
+
+        for (DiscordMessage.Detecciones d : msg.getDetecciones()) {
+            OntClass clsDeteccion = getClaseDeteccion(model, d);
+            if (clsDeteccion != null) {
+                Individual indDet = model.createIndividual(NS + "det_" + d.name().toLowerCase(), clsDeteccion);
+                individuo.addProperty(tieneDeteccion, indDet);
+                System.out.println("[AgenteClasificador] Añadida detección: " + d.name() + " -> " + clsDeteccion.getLocalName());
+            }
+        }
+
+        // Consultar el nivel inferido por el razonador
+        ObjectProperty tieneNivel = model.getObjectProperty(NS + "tieneNivel");
+        Statement stmt = individuo.getProperty(tieneNivel);
+
+        if (stmt != null) {
+            String nivelUri = stmt.getObject().toString();
+            // Devolver solo el nombre local (sin la URI completa)
+            return nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
+        }
+
+        return "SinClasificar";
+    }
+
     private OntClass getClaseDeteccion(OntModel model, DiscordMessage.Detecciones d) {
         switch (d) {
             case GUN:
@@ -168,6 +142,77 @@ public class AgenteClasificador extends Agent {
                 return model.getOntClass(NS + "DeteccionPositiva");
             default:
                 return null;
+        }
+    }
+
+    private void reenviarSegunNivel(DiscordMessage msg, String nivel) {
+        switch (nivel) {
+            case "riesgoCritico":
+            case "riesgoGrave":
+                enviarAIncidencias(msg);
+                break;
+            case "alertaSaludMental":
+                System.out.println("[AgenteClasificador] Alerta de salud mental detectada -> id: " + msg.getId());
+                enviarAIncidencias(msg);
+                break;
+            case "riesgoModerado":
+            case "riesgoLeve":
+                System.out.println("[AgenteClasificador] Riesgo moderado/leve registrado -> id: " + msg.getId());
+                break;
+            default:
+                System.out.println("[AgenteClasificador] Mensaje sin riesgo -> id: " + msg.getId());
+        }
+    }
+
+    private void enviarAIncidencias(DiscordMessage msg) {
+        try {
+            DFAgentDescription template = new DFAgentDescription();
+            ServiceDescription sd = new ServiceDescription();
+            sd.setType("gestion-incidencias");
+            template.addServices(sd);
+
+            DFAgentDescription[] agents = DFService.search(this, template);
+            if (agents == null || agents.length == 0) {
+                System.err.println("[AgenteClasificador] No se encontró AgenteIncidencias.");
+                return;
+            }
+
+            ACLMessage alerta = new ACLMessage(ACLMessage.INFORM);
+            alerta.addReceiver(agents[0].getName());
+            alerta.setContentObject(msg);
+            send(alerta);
+
+            System.out.println("[AgenteClasificador] Alerta enviada a AgenteIncidencias -> id: " + msg.getId());
+
+        } catch (Exception e) {
+            System.err.println("[AgenteClasificador] Error enviando a AgenteIncidencias: " + e.getMessage());
+        }
+    }
+
+    private void registerService() {
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(SERVICE_TYPE);
+        sd.setName(SERVICE_NAME);
+        dfd.addServices(sd);
+
+        try {
+            DFService.register(this, dfd);
+            System.out.println("[AgenteClasificador] Registrado en el DF como '" + SERVICE_TYPE + "'.");
+        } catch (FIPAException e) {
+            throw new IllegalStateException("No se pudo registrar el AgenteClasificador", e);
+        }
+    }
+
+    @Override
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+            System.out.println("[AgenteClasificador] Desregistrado del DF.");
+        } catch (FIPAException e) {
+            e.printStackTrace();
         }
     }
 }
