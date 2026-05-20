@@ -14,7 +14,6 @@ import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import model.DiscordMessage;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -24,12 +23,9 @@ public class AgenteIncidencias extends Agent {
     private static final String TOKEN_ENV = "token.env";
     private static final String ADMIN_ID_KEY = "ADMIN_DISCORD_ID";
     private static final String DISCORD_TOKEN_KEY = "DISCORD_TOKEN";
-    private static final String SAFE_IMAGE_URL_KEY = "SAFE_IMAGE_URL";
-    private static final String DEFAULT_SAFE_IMAGE_URL = "https://images.openai.com/static-rsc-4/KHGu71UfH_dMNlhUal-896Wz58oxmodI2Ho_tcS5ZNy-Sz9Dr8KWUF1rB3eATUCb8RcTaMOtcKAZ7lR6-U_2Zw8oTCgajaJj4iIQ2z6mASBFylLLi7Z3XfgTXnIp2XvSRtKaJMbiQvbnasXApZ_kILMSBhVkexXMhI2EK2Z_vjvBL_qVafG7L3MxpDlYmbsD?purpose=fullsize";
 
     private transient JDA jda;
     private String adminId;
-    private String safeImageUrl;
 
     @Override
     protected void setup() {
@@ -37,7 +33,6 @@ public class AgenteIncidencias extends Agent {
 
         String token = loadValueFromEnv(DISCORD_TOKEN_KEY);
         this.adminId = loadValueFromEnv(ADMIN_ID_KEY);
-        this.safeImageUrl = firstNonBlank(loadValueFromEnv(SAFE_IMAGE_URL_KEY), DEFAULT_SAFE_IMAGE_URL);
 
         if (token == null || token.isBlank()) {
             System.err.println("[AgenteIncidencias] ERROR: Falta DISCORD_TOKEN en token.env");
@@ -48,9 +43,7 @@ public class AgenteIncidencias extends Agent {
             System.out.println("[AgenteIncidencias] AVISO: Falta ADMIN_DISCORD_ID en token.env; no se enviarán alertas privadas al admin.");
         }
 
-        if (safeImageUrl == null || safeImageUrl.isBlank()) {
-            System.err.println("[AgenteIncidencias] AVISO: Falta SAFE_IMAGE_URL en token.env. No se enviará imagen bonita.");
-        }
+        
 
         // Conectar el agente a la API de Discord
         try {
@@ -87,8 +80,8 @@ public class AgenteIncidencias extends Agent {
                         System.out.println("\n[AgenteIncidencias] ¡Alerta grave detectada en el sistema!");
                         System.out.println("Contenido peligroso: " + discordMsg.getDetecciones());
 
-                        enviarImagenBonitaAlCanal(discordMsg);
-                        enviarMensajePrivadoAdmin(discordMsg);
+                        // Notificar solo a administradores. Las acciones en canal las realiza AgenteSancionador.
+                                        enviarMensajePrivadoAdmin(discordMsg);
 
                     } catch (UnreadableException e) {
                         System.err.println("Error al decodificar el objeto DiscordMessage: " + e.getMessage());
@@ -140,44 +133,7 @@ public class AgenteIncidencias extends Agent {
         );
     }
 
-    private void enviarImagenBonitaAlCanal(DiscordMessage info) {
-        if (jda == null || info == null || info.getChannelId() == null || info.getChannelId().isBlank()) {
-            return;
-        }
-
-        if (safeImageUrl == null || safeImageUrl.isBlank()) {
-            System.err.println("[AgenteIncidencias] SAFE_IMAGE_URL no está configurada; se omite la respuesta visual.");
-            return;
-        }
-
-        TextChannel channel = jda.getTextChannelById(info.getChannelId());
-        if (channel == null) {
-            System.err.println("[AgenteIncidencias] No se encontró el canal original para enviar la imagen bonita: " + info.getChannelId());
-            return;
-        }
-
-        EmbedBuilder embed = new EmbedBuilder()
-                .setTitle("Contenido retirado")
-                .setDescription("Se detectó contenido no permitido. Aquí tienes algo bonito mientras tanto.")
-                .setImage(safeImageUrl);
-
-        channel.sendMessageEmbeds(embed.build()).queue(
-                success -> System.out.println("[AgenteIncidencias] Imagen bonita enviada al canal original (" + info.getChannelId() + ")."),
-                error -> System.err.println("[AgenteIncidencias] Error enviando la imagen bonita al canal: " + error.getMessage())
-        );
-    }
-
-    private String firstNonBlank(String first, String second) {
-        if (first != null && !first.isBlank()) {
-            return first;
-        }
-
-        if (second != null && !second.isBlank()) {
-            return second;
-        }
-
-        return null;
-    }
+    
 
     /**
      * Función para leer token.env

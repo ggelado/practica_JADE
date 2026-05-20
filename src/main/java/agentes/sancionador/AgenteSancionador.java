@@ -14,9 +14,11 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import model.DiscordMessage;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 public class AgenteSancionador extends Agent {
 	
@@ -27,12 +29,17 @@ public class AgenteSancionador extends Agent {
     private static final String DISCORD_TOKEN_KEY = "DISCORD_TOKEN";
     
     private transient JDA jda;
+    private String safeImageUrl;
 
 	@Override
 	protected void setup() {
 		System.out.println("[Agenet Sancionador] Arrancando:" + getAID().getName());
 		//Obtener token e id del canal
-		String token = loadValueFromEnv(DISCORD_TOKEN_KEY);
+        String token = loadValueFromEnv(DISCORD_TOKEN_KEY);
+        this.safeImageUrl = loadValueFromEnv("SAFE_IMAGE_URL");
+        if (this.safeImageUrl == null || this.safeImageUrl.isBlank()) {
+            this.safeImageUrl = "https://images.openai.com/static-rsc-4/KHGu71UfH_dMNlhUal-896Wz58oxmodI2Ho_tcS5ZNy-Sz9Dr8KWUF1rB3eATUCb8RcTaMOtcKAZ7lR6-U_2Zw8oTCgajaJj4iIQ2z6mASBFylLLi7Z3XfgTXnIp2XvSRtKaJMbiQvbnasXApZ_kILMSBhVkexXMhI2EK2Z_vjvBL_qVafG7L3MxpDlYmbsD?purpose=fullsize";
+        }
 		
 		if(token == null || token.isBlank()) {
 			System.err.println("[Agente Sancionador] ERROR: Falta el token de Discord");
@@ -63,8 +70,8 @@ public class AgenteSancionador extends Agent {
 						DiscordMessage discordMsg = (DiscordMessage) msg.getContentObject();
 						System.out.println("[Agente Sancionador] Mensaje obtenido" + discordMsg.getId()
 						+ " | Detecciones: " + discordMsg.getDetecciones());
-						//Eliminar el mensaje
-						eliminarMensaje(discordMsg);
+                        //Eliminar el mensaje y publicar imagen bonita
+                        eliminarMensaje(discordMsg);
 					} catch(UnreadableException e) {
 						System.err.println("[Agente Sancionador] Error leyendo mensaje");
 					}
@@ -110,13 +117,41 @@ public class AgenteSancionador extends Agent {
             return;
         }
         
-        // Se elimina el mensaje del canal
+        // Se elimina el mensaje del canal y luego publicamos imagen bonita
         channel.deleteMessageById(msgId).queue(
-        		success -> System.out.println("[Agente Sancionador] Mensaje eliminado -> id: " + msgId),
-        		error -> System.err.println("[Agente Sancionador] Error al eliminar mensaje -> id: " 
-        					+ msgId + " | Causa: " + error.getMessage())
+                success -> {
+                    System.out.println("[Agente Sancionador] Mensaje eliminado -> id: " + msgId);
+                    enviarImagenBonita(channel, chId);
+                },
+                error -> {
+                    System.err.println("[Agente Sancionador] Error al eliminar mensaje -> id: " + msgId + " | Causa: " + error.getMessage());
+                    // Intentar igualmente publicar la imagen aunque la eliminación falle
+                    enviarImagenBonita(channel, chId);
+                }
         );
     }
+
+    private void enviarImagenBonita(TextChannel channel, String chId) {
+        if (channel == null) return;
+        if (safeImageUrl == null || safeImageUrl.isBlank()) {
+            System.err.println("[Agente Sancionador] SAFE_IMAGE_URL no configurada; se omite imagen bonita.");
+            return;
+        }
+        try {
+            EmbedBuilder embed = new EmbedBuilder()
+                    .setTitle("Contenido retirado")
+                    .setDescription("Se ha detectado contenido no permitido. Aquí tienes algo bonito mientras tanto.")
+                    .setImage(safeImageUrl);
+            channel.sendMessageEmbeds(embed.build()).queue(
+                    s -> System.out.println("[Agente Sancionador] Imagen bonita enviada al canal " + chId),
+                    e -> System.err.println("[Agente Sancionador] Error enviando imagen: " + e.getMessage())
+            );
+        } catch (Exception e) {
+            System.err.println("[Agente Sancionador] Error construyendo/enviando embed: " + e.getMessage());
+        }
+    }
+
+    
     
     private void registerService() {
         DFAgentDescription dfd = new DFAgentDescription();
