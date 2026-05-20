@@ -92,7 +92,7 @@ public class AgenteClasificador extends Agent {
         for (DiscordMessage.Detecciones d : msg.getDetecciones()) {
             OntClass clsDeteccion = getClaseDeteccion(model, d);
             if (clsDeteccion != null) {
-                Individual indDet = model.createIndividual(NS + "det_" + d.name().toLowerCase(), clsDeteccion);
+            	Individual indDet = model.createIndividual(NS + "det_" + msg.getId() + "_" + d.name().toLowerCase(), clsDeteccion);
                 individuo.addProperty(tieneDeteccion, indDet);
             } else {
                 System.err.println("[AgenteClasificador] No se encontró clase ontológica para detección: " + d);
