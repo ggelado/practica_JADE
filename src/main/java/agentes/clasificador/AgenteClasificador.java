@@ -5,6 +5,7 @@ import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
 import jade.domain.FIPAException;
 
 
@@ -14,17 +15,49 @@ public class AgenteClasificador extends Agent {
 	  private static final String ONTOLOGY_PATH = "ontologia.rdf";
 	  private static final String NS = "http://www.discord.monitor/ontologia#";
 
-    @Override
-    protected void setup() {
-    	 System.out.println("[AgenteClasificador] Arrancando: " + getAID().getName());
-    	 registerService();
-    	 addBehaviour(new CyclicBehaviour() {
-              @Override
-              public void action() {}
-              ACLMessage msg = receive();
-    	 }
-    	 
-    }
+	  @Override
+	    protected void setup() {
+	    	 System.out.println("[AgenteClasificador] Arrancando: " + getAID().getName());
+	    	 registerService();
+	    	 addBehaviour(new CyclicBehaviour() {
+	              @Override
+	              public void action() {
+	              ACLMessage msg = receive();
+	              
+	              if (msg != null) {
+	                  try {
+	                      DiscordMessage discordMsg = (DiscordMessage) msg.getContentObject();
+
+	                      System.out.println("[AgenteClasificador] Mensaje recibido -> id: "
+	                              + discordMsg.getId()
+	                              + " | detecciones: " + discordMsg.getDetecciones());
+
+	                      String nivel = clasificarMensaje(discordMsg);
+
+	                      System.out.println("[AgenteClasificador] Nivel inferido: " + nivel);
+
+	                      reenviarSegunNivel(discordMsg, nivel);
+
+	                  } catch (UnreadableException e) {
+	                      System.err.println("[AgenteClasificador] Error leyendo mensaje: " + e.getMessage());
+	                  }
+	              } else {
+	                  block();
+	              }
+	           }
+
+				private String clasificarMensaje(DiscordMessage discordMsg) {
+					// TODO Auto-generated method stub
+					return null;
+				}
+
+				private void reenviarSegunNivel(DiscordMessage discordMsg, String nivel) {
+					// TODO Auto-generated method stub
+					
+				}
+	    	 
+	    	 
+	    }
     private void registerService() {
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
