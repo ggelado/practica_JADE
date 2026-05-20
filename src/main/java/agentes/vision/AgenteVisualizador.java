@@ -15,9 +15,9 @@ import java.util.Map;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
-import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import model.DiscordMessage;
@@ -28,6 +28,7 @@ public class AgenteVisualizador extends Agent {
   private static final String SERVICE_NAME = "Servicio-Vision-Seguridad";
   private static final Path PYTHON_SCRIPT = Path.of("visionModel", "predict_image.py");
   private static final String PYTHON_ENV_VAR = "VISION_PYTHON_PATH";
+  private static final String DEFAULT_PYTHON_EXECUTABLE = "python";
 
   // Valor resuelto en setup()
   private String pythonExecutable;
@@ -38,10 +39,11 @@ public class AgenteVisualizador extends Agent {
 
     Map<String, String> config = loadConfig(Path.of("token.env"));
     String py = config.get(PYTHON_ENV_VAR);
+    this.pythonExecutable = firstNonBlank(py, System.getenv(PYTHON_ENV_VAR), DEFAULT_PYTHON_EXECUTABLE);
+
     if (py == null || py.isBlank()) {
-      throw new IllegalStateException("Define VISION_PYTHON_PATH en token.env");
+      System.out.println("[AgenteVisualizador] VISION_PYTHON_PATH no está definido; usando '" + this.pythonExecutable + "'.");
     }
-    this.pythonExecutable = py;
 
     registerService(); // Registrar el servicio y darlo de alta
 
@@ -213,6 +215,18 @@ public class AgenteVisualizador extends Agent {
     }
 
     return values;
+  }
+
+  private static String firstNonBlank(String first, String second, String fallback) {
+    if (first != null && !first.isBlank()) {
+      return first;
+    }
+
+    if (second != null && !second.isBlank()) {
+      return second;
+    }
+
+    return fallback;
   }
 
   private void sendToClassifier(DiscordMessage discordMessage) throws IOException, FIPAException {
