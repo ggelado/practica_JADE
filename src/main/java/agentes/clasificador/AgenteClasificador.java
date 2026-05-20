@@ -109,13 +109,35 @@ public class AgenteClasificador extends Agent {
             return "SinClasificar";
         }
 
+        // Recoger todos los niveles inferidos y quedarse con el más grave
         org.apache.jena.rdf.model.NodeIterator nit = individuo.listPropertyValues(tieneNivel);
-        if (nit.hasNext()) {
+        String nivelMasGrave = "SinClasificar";
+        while (nit.hasNext()) {
             String nivelUri = nit.next().toString();
-            return nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
+            String nivel = nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
+            System.out.println("[AgenteClasificador] Nivel inferido parcial: " + nivel);
+            nivelMasGrave = elegirMasGrave(nivelMasGrave, nivel);
         }
 
-        return "SinClasificar";
+        return nivelMasGrave;
+    }
+
+    private String elegirMasGrave(String actual, String nuevo) {
+        int pesoActual = getPeso(actual);
+        int pesoNuevo = getPeso(nuevo);
+        return pesoActual >= pesoNuevo ? actual : nuevo;
+    }
+
+    private int getPeso(String nivel) {
+        switch (nivel) {
+            case "riesgoCritico":     return 5;
+            case "riesgoGrave":       return 4;
+            case "alertaSaludMental": return 3;
+            case "riesgoModerado":    return 2;
+            case "riesgoLeve":        return 1;
+            case "sinRiesgo":         return 0;
+            default:                  return -1;
+        }
     }
 
     private OntClass getClaseDeteccion(OntModel model, DiscordMessage.Detecciones d) {
