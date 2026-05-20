@@ -16,7 +16,23 @@ public class DiscordMessage implements Serializable {
     BLOOD,
     VIOLENCE,
     FIGHT,
-    NAZI; //TODO COMPLETAR TIPOS Y CATEGORÍAS CON LAS DE TEXTO
+    NAZI, //TODO COMPLETAR TIPOS Y CATEGORÍAS CON LAS DE TEXTO
+	 
+    SPAM,
+    SCAM,
+    DISCRIMINATION,
+    TOXIC,
+    QUESTION,
+    LINK,
+    MENTION,
+    HELP,
+    POSITIVE,
+    GREETING,
+	
+	DEPRESSION,
+	ANXIETY,  
+	SELF_HARM, 
+	LONELINESS;
 
     public static Detecciones fromLabel(String value) {
       if (value == null) {
