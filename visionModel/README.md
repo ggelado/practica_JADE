@@ -38,6 +38,8 @@ source ./venv/Scripts/activate
 pip install -r requirements.txt
 ```
 
+4. Editar variable de entorno poniendo la ruta del *python virtual*
+
 ---
 
 # ¿Cómo ejecutar? (instrucciones para Docker)
