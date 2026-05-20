@@ -52,6 +52,35 @@ public class DiscordMessage implements Serializable {
           return NAZI;
         case "safe":
           return null;
+        case "toxic":
+          return TOXIC;
+        case "spam":
+          return SPAM;
+        case "scam":
+          return SCAM;
+        case "discrimination":
+          return DISCRIMINATION;
+        case "depression":
+          return DEPRESSION;
+        case "anxiety":
+          return ANXIETY;
+        case "self_harm":
+        case "self-harm":
+          return SELF_HARM;
+        case "loneliness":
+          return LONELINESS;
+        case "help":
+          return HELP;
+        case "positive":
+          return POSITIVE;
+        case "greeting":
+          return GREETING;
+        case "question":
+          return QUESTION;
+        case "link":
+          return LINK;
+        case "mention":
+          return MENTION;
         case "gun":
         case "ak47":
         case "m4a1-s":
