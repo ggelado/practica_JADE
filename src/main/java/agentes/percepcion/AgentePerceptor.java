@@ -43,7 +43,7 @@ public class AgentePerceptor extends Agent {
                     .addEventListeners(new ListenerAdapter() {
                         @Override
                         public void onMessageReceived(MessageReceivedEvent event) {
-                            // Reutilizamos la lógica del perceptor existente
+                            
                             if (event.getAuthor().isBot()) {
                                 return;
                             }

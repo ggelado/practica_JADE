@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -31,9 +32,7 @@ public class AgenteAnalista extends Agent {
     private static final String SERVICE_NAME = "Servicio-Analista-Texto";
     private static final String GEMINI_KEY_VAR = "GEMINI_API_KEY";
     private static final String GEMINI_URL =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
-    private static final Pattern TEXT_FIELD = Pattern.compile("\"text\"\\s*:\\s*\"(.*?)\"", Pattern.DOTALL);
-
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=";
     private String geminiApiKey;
 
     @Override
@@ -131,26 +130,63 @@ public class AgenteAnalista extends Agent {
 
         String body = "{\"contents\":[{\"parts\":[{\"text\":\"" + escapeJson(prompt) + "\"}]}]}";
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-            .uri(URI.create(GEMINI_URL + geminiApiKey))
-            .header("Content-Type", "application/json")
-            .POST(HttpRequest.BodyPublishers.ofString(body, StandardCharsets.UTF_8))
-            .build();
+        // Configuración de la cola de espera
+        int maxRetries = 3;
+        int tiempoEsperaMs = 15000; // 15 segundos de espera para que se recargue la cuota por minuto de Gemini
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        for (int intento = 1; intento <= maxRetries; intento++) {
+            try {
+                HttpClient client = HttpClient.newHttpClient();
+                HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(GEMINI_URL + geminiApiKey))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(body, StandardCharsets.UTF_8))
+                    .build();
 
-        if (response.statusCode() != 200) {
-            throw new IOException("Gemini devolvió HTTP " + response.statusCode() + ": " + response.body());
+                HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+                // MANEJO DE LÍMITE (COLA DE ESPERA)
+                if (response.statusCode() == 429) {
+                    System.err.println("[AgenteAnalista] Error API Saturada (429). Intento " + intento + "/" + maxRetries + ". Esperando " + (tiempoEsperaMs/1000) + " segundos...");
+                    
+                    // Pausamos el agente. Los nuevos mensajes se irán acumulando en el buzón interno de JADE
+                    Thread.sleep(tiempoEsperaMs);
+                    continue; // Volvemos a lanzar el bucle para intentar llamar a la API de nuevo
+                }
+
+                else if (response.statusCode() != 200) {
+                    System.err.println("[AgenteAnalista] Error de conexión con la API (" + response.statusCode() + "). Dejando pasar el mensaje como 'safe'.");
+                    return "safe";
+                }
+
+                // Si todo va bien (HTTP 200), extraemos la etiqueta navegando por el JSON con Gson
+                try {
+                    JsonObject jsonResponse = JsonParser.parseString(response.body()).getAsJsonObject();
+                    String extractedText = jsonResponse
+                            .getAsJsonArray("candidates")
+                            .get(0).getAsJsonObject()
+                            .getAsJsonObject("content")
+                            .getAsJsonArray("parts")
+                            .get(0).getAsJsonObject()
+                            .get("text").getAsString();
+
+                    return extractedText.trim();
+                } catch (Exception e) {
+                    System.err.println("[AgenteAnalista] Error navegando el JSON con Gson. Dejando pasar como 'safe'.");
+                    return "safe";
+                }
+
+            } catch (Exception e) {
+                // Si no hay internet o falla la librería HttpClient
+                System.err.println("[AgenteAnalista] Excepción llamando a Gemini: " + e.getMessage() + ". Dejando pasar el mensaje como 'safe'.");
+                return "safe";
+            }
         }
 
-        // Extraer el primer campo "text" del JSON de respuesta
-        Matcher matcher = TEXT_FIELD.matcher(response.body());
-        if (!matcher.find()) {
-            throw new IOException("No se pudo parsear la respuesta de Gemini: " + response.body());
-        }
-
-        return matcher.group(1).trim();
+        // Si después de los 3 intentos sigue dando error 429, dejamos pasar el mensaje
+        System.err.println("[AgenteAnalista] Se agotaron los reintentos tras la espera. Dejando pasar el mensaje como 'safe'.");
+        return "safe";
+        
     }
 
     private static String escapeJson(String text) {
