@@ -31,7 +31,7 @@ public class AgenteAnalista extends Agent {
     private static final String SERVICE_NAME = "Servicio-Analista-Texto";
     private static final String GEMINI_KEY_VAR = "GEMINI_API_KEY";
     private static final String GEMINI_URL =
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=";
     private static final Pattern TEXT_FIELD = Pattern.compile("\"text\"\\s*:\\s*\"(.*?)\"", Pattern.DOTALL);
 
     private String geminiApiKey;
