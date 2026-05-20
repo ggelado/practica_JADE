@@ -157,6 +157,7 @@ public class AgenteClasificador extends Agent {
         System.out.println("[AgenteClasificador] reenviarSegunNivel -> id: " + msg.getId() + " | nivel: " + nivel);
         switch (nivel) {
             case "riesgoCritico"://elimino y aviso 
+                enviarASancionador(msg);
             case "riesgoGrave":
                 enviarAIncidencias(msg);
                 break;
