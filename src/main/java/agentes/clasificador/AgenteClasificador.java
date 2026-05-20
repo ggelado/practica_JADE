@@ -10,17 +10,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
 import model.DiscordMessage;
-
-import org.apache.jena.ontology.Individual;
-import org.apache.jena.ontology.OntClass;
-import org.apache.jena.ontology.OntModel;
-import org.apache.jena.ontology.OntModelSpec;
-import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Statement;
-import org.apache.jena.ontology.ObjectProperty;
-
-import java.io.FileInputStream;
-import java.io.InputStream;
+import openllet.jena.PelletReasonerFactory;
 
 public class AgenteClasificador extends Agent {
 
@@ -65,7 +55,7 @@ public class AgenteClasificador extends Agent {
 
     private String clasificarMensaje(DiscordMessage msg) {
         // Cargar ontología
-        OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+        OntModel model = ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC);
 
         try (InputStream in = new FileInputStream(ONTOLOGY_PATH)) {
             model.read(in, null, "RDF/XML");
@@ -85,33 +75,41 @@ public class AgenteClasificador extends Agent {
 
         // Añadir cada detección como individuo vinculado
         ObjectProperty tieneDeteccion = model.getObjectProperty(NS + "tieneDeteccion");
+        if (tieneDeteccion == null) {
+            System.err.println("[AgenteClasificador] Propiedad tieneDeteccion no encontrada en la ontología");
+        }
 
         for (DiscordMessage.Detecciones d : msg.getDetecciones()) {
             OntClass clsDeteccion = getClaseDeteccion(model, d);
             if (clsDeteccion != null) {
                 Individual indDet = model.createIndividual(NS + "det_" + d.name().toLowerCase(), clsDeteccion);
                 individuo.addProperty(tieneDeteccion, indDet);
-                System.out.println("[AgenteClasificador] Añadida detección: " + d.name() + " -> " + clsDeteccion.getLocalName());
+            } else {
+                System.err.println("[AgenteClasificador] No se encontró clase ontológica para detección: " + d);
             }
         }
 
         // Consultar el nivel inferido por el razonador
         ObjectProperty tieneNivel = model.getObjectProperty(NS + "tieneNivel");
+        if (tieneNivel == null) {
+            System.err.println("[AgenteClasificador] Propiedad tieneNivel no encontrada en la ontología");
+        }
         Statement stmt = individuo.getProperty(tieneNivel);
 
         if (stmt != null) {
             String nivelUri = stmt.getObject().toString();
-            // Devolver solo el nombre local (sin la URI completa)
-            return nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
+            String nivelLocal = nivelUri.contains("#") ? nivelUri.split("#")[1] : nivelUri;
+            return nivelLocal;
         }
-
         return "SinClasificar";
     }
+
+    
 
     private OntClass getClaseDeteccion(OntModel model, DiscordMessage.Detecciones d) {
         switch (d) {
             case GUN:
-                return model.getOntClass(NS + "DeteccionArma");
+                return model.getOntClass(NS + "Deteccion_Arma");
             case BLOOD:
             case FIGHT:
                 return model.getOntClass(NS + "DeteccionViolenciaLeve");
@@ -119,9 +117,9 @@ public class AgenteClasificador extends Agent {
                 return model.getOntClass(NS + "DeteccionViolenciaGrave");
             case NAZI:
             case DISCRIMINATION:
-                return model.getOntClass(NS + "DeteccionOdio");
+                return model.getOntClass(NS + "Deteccion_Odio");
             case TOXIC:
-                return model.getOntClass(NS + "DeteccionToxica");
+                return model.getOntClass(NS + "Deteccion_Toxica");
             case SPAM:
                 return model.getOntClass(NS + "DeteccionMolestaLeve");
             case SCAM:
@@ -135,17 +133,18 @@ public class AgenteClasificador extends Agent {
             case QUESTION:
             case LINK:
             case MENTION:
-                return model.getOntClass(NS + "DeteccionNeutra");
+                return model.getOntClass(NS + "Deteccion_Neutra");
             case HELP:
             case POSITIVE:
             case GREETING:
-                return model.getOntClass(NS + "DeteccionPositiva");
+                return model.getOntClass(NS + "Deteccion_Positiva");
             default:
                 return null;
         }
     }
 
     private void reenviarSegunNivel(DiscordMessage msg, String nivel) {
+        System.out.println("[AgenteClasificador] reenviarSegunNivel -> id: " + msg.getId() + " | nivel: " + nivel);
         switch (nivel) {
             case "riesgoCritico"://elimino y aviso 
             case "riesgoGrave":
