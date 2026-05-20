@@ -1,8 +1,12 @@
 package agentes.clasificador;
-
+import model.DiscordMessage;
 import jade.core.Agent;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.lang.acl.ACLMessage;
+import jade.domain.FIPAException;
+
 
 public class AgenteClasificador extends Agent {
 	  private static final String SERVICE_TYPE = "clasificador";
@@ -14,6 +18,11 @@ public class AgenteClasificador extends Agent {
     protected void setup() {
     	 System.out.println("[AgenteClasificador] Arrancando: " + getAID().getName());
     	 registerService();
+    	 addBehaviour(new CyclicBehaviour() {
+              @Override
+              public void action() {}
+              ACLMessage msg = receive();
+    	 }
     	 
     }
     private void registerService() {
