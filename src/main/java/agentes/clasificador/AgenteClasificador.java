@@ -1,6 +1,8 @@
 package agentes.clasificador;
 
 import jade.core.Agent;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class AgenteClasificador extends Agent {
 	  private static final String SERVICE_TYPE = "clasificador";
@@ -13,5 +15,21 @@ public class AgenteClasificador extends Agent {
     	 System.out.println("[AgenteClasificador] Arrancando: " + getAID().getName());
     	 registerService();
     	 
+    }
+    private void registerService() {
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(SERVICE_TYPE);
+        sd.setName(SERVICE_NAME);
+        dfd.addServices(sd);
+
+        try {
+            DFService.register(this, dfd);
+            System.out.println("[AgenteClasificador] Registrado en el DF como '" + SERVICE_TYPE + "'.");
+        } catch (FIPAException e) {
+            throw new IllegalStateException("No se pudo registrar el AgenteClasificador", e);
+        }
     }
 }
