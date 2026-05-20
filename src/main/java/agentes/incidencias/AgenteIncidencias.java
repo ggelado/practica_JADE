@@ -1,23 +1,22 @@
 package agentes.incidencias;
 
-import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.UnreadableException;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
-
-import model.DiscordMessage;
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.User;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+
+import jade.core.Agent;
+import jade.core.behaviours.CyclicBehaviour;
+import jade.domain.DFService;
+import jade.domain.FIPAException;
+import jade.domain.FIPAAgentManagement.DFAgentDescription;
+import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.UnreadableException;
+import model.DiscordMessage;
+import net.dv8tion.jda.api.JDA;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 
 public class AgenteIncidencias extends Agent {
 
@@ -94,25 +93,36 @@ public class AgenteIncidencias extends Agent {
         if (jda == null || adminId == null) return;
 
         // Buscamos al usuario
+        String textoAlerta = "🚨 **[ALERTA DE SEGURIDAD]** 🚨\n"
+                + "Se ha detectado una infracción en el servidor.\n"
+                + "**ID del Mensaje:** " + info.getId() + "\n"
+                + "**Tipos de contenido detectados:** " + info.getDetecciones() + "\n"
+                + "Por favor, revisa el canal de moderación.";
+
+        // Intentar como canal (ID de canal)
+        TextChannel channel = jda.getTextChannelById(adminId);
+        if (channel != null) {
+            channel.sendMessage(textoAlerta).queue(
+                success -> System.out.println("[AgenteIncidencias] Mensaje de alerta enviado al canal (ID " + adminId + ") con éxito."),
+                error -> System.err.println("[AgenteIncidencias] Error al enviar el mensaje al canal: " + error.getMessage())
+            );
+            return;
+        }
+
+        // Si no es canal, intentar como usuario (DM)
         jda.retrieveUserById(adminId).queue(
             user -> {
                 user.openPrivateChannel().queue(
-                    channel -> {
-                        String textoAlerta = "🚨 **[ALERTA DE SEGURIDAD]** 🚨\n"
-                                + "Se ha detectado una infracción en el servidor.\n"
-                                + "**ID del Mensaje:** " + info.getId() + "\n"
-                                + "**Tipos de contenido detectados:** " + info.getDetecciones() + "\n"
-                                + "Por favor, revisa el canal de moderación.";
-                        
-                        // Enviamos el mensaje a Ds
-                        channel.sendMessage(textoAlerta).queue(
+                    privateChannel -> {
+                        privateChannel.sendMessage(textoAlerta).queue(
                             success -> System.out.println("[AgenteIncidencias] Mensaje de alerta enviado al administrador por Discord con éxito."),
                             error -> System.err.println("[AgenteIncidencias] Error al enviar el DM: " + error.getMessage())
                         );
-                    }
+                    },
+                    error -> System.err.println("[AgenteIncidencias] Error abriendo canal privado: " + error.getMessage())
                 );
             },
-            error -> System.err.println("[AgenteIncidencias] No se pudo encontrar al usuario administrador con el ID proporcionado.")
+            error -> System.err.println("[AgenteIncidencias] No se pudo encontrar al usuario administrador ni al canal con el ID proporcionado.")
         );
     }
 
