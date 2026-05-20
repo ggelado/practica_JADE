@@ -20,6 +20,9 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class AgenteSancionador extends Agent {
 	
+	private static final String SERVICE_TYPE    = "sancionador";
+	private static final String SERVICE_NAME    = "Servicio-Sancionador";
+	
     private static final String TOKEN_ENV       = "token.env";
     private static final String DISCORD_TOKEN_KEY = "DISCORD_TOKEN";
     
@@ -47,6 +50,8 @@ public class AgenteSancionador extends Agent {
 			e.printStackTrace();
 			return;
 		}
+		
+		registerService();
 		
 		// Comportamiento para eliminar el mensaje:
 		addBehaviour(new CyclicBehaviour() {
@@ -111,5 +116,33 @@ public class AgenteSancionador extends Agent {
         		error -> System.err.println("[Agente Sancionador] Error al eliminar mensaje -> id: " 
         					+ msgId + " | Causa: " + error.getMessage())
         );
+    }
+    
+    private void registerService() {
+        DFAgentDescription dfd = new DFAgentDescription();
+        dfd.setName(getAID());
+
+        ServiceDescription sd = new ServiceDescription();
+        sd.setType(SERVICE_TYPE);
+        sd.setName(SERVICE_NAME);
+        dfd.addServices(sd);
+
+        try {
+            DFService.register(this, dfd);
+            System.out.println("[AgenteSancionador] Registrado en el DF como '" + SERVICE_TYPE + "'.");
+        } catch (FIPAException e) {
+            throw new IllegalStateException("No se pudo registrar el AgenteSancionador", e);
+        }
+    }
+    
+    @Override
+    protected void takeDown() {
+        try {
+            DFService.deregister(this);
+            if (jda != null) jda.shutdown();
+            System.out.println("[AgenteSancionador] Desregistrado del DF.");
+        } catch (FIPAException e) {
+            e.printStackTrace();
+        }
     }
 }

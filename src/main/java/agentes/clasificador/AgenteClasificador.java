@@ -224,4 +224,30 @@ public class AgenteClasificador extends Agent {
             e.printStackTrace();
         }
     }
+    
+    private void enviarASancionador(DiscordMessage msg) {
+    	try {
+            DFAgentDescription template = new DFAgentDescription();
+            ServiceDescription sd = new ServiceDescription();
+            sd.setType("sancionador");
+            template.addServices(sd);
+
+            DFAgentDescription[] agents = DFService.search(this, template);
+            if (agents == null || agents.length == 0) {
+                System.err.println("[Agente Clasificador] No se encontró AgenteSancionador.");
+                return;
+            }
+
+            ACLMessage alerta = new ACLMessage(ACLMessage.INFORM);
+            alerta.addReceiver(agents[0].getName());
+            alerta.setContentObject(msg);
+            send(alerta);
+
+            System.out.println("[Agente Clasificador] Mensaje enviado al Sancionador -> id: " + msg.getId());
+
+        } catch (Exception e) {
+            System.err.println("[Agente Clasificador] Error enviando al Sancionador: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
