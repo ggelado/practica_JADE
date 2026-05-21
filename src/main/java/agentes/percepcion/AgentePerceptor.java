@@ -20,153 +20,152 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class AgentePerceptor extends Agent {
 
-    private static final String TOKEN_ENV = "token.env";
-    private static final String DISCORD_TOKEN_KEY = "DISCORD_TOKEN";
-    private static final String VISION_SERVICE_TYPE = "vision-safety";
-    private static final String ANALISTA_SERVICE_TYPE = "analista-texto";
+  private static final String TOKEN_ENV = "token.env";
+  private static final String DISCORD_TOKEN_KEY = "DISCORD_TOKEN";
+  private static final String VISION_SERVICE_TYPE = "vision-safety";
+  private static final String ANALISTA_SERVICE_TYPE = "analista-texto";
 
-    private transient JDA jda;
+  private transient JDA jda;
 
-    @Override
-    protected void setup() {
-        System.out.println("Agente Perceptor JADE arrancando: " + getAID().getName());
+  @Override
+  protected void setup() {
+    System.out.println("Agente Perceptor JADE arrancando: " + getAID().getName());
 
-        String token = loadTokenFromFile(TOKEN_ENV);
-        if (token == null || token.isBlank()) {
-            System.err.println("No se encontró token de Discord. JDA no se iniciará.");
-            return;
-        }
-
-        try {
-            jda = JDABuilder.createDefault(token)
-                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
-                    .addEventListeners(new ListenerAdapter() {
-                        @Override
-                        public void onMessageReceived(MessageReceivedEvent event) {
-                            
-                            if (event.getAuthor().isBot()) {
-                                return;
-                            }
-
-                            String autor = event.getAuthor().getAsTag();
-                            String canal = event.getChannel().getName();
-                            String contenido = null;
-                            try {
-                                contenido = event.getMessage().getContentRaw();
-                            } catch (Exception ignore) {
-                            }
-
-                            System.out.println("[Perceptor] Mensaje recibido en #" + canal
-                                    + " de " + autor + ": " + (contenido == null ? "" : contenido));
-
-                            event.getMessage().getAttachments().forEach(attachment -> {
-                                if (attachment.isImage()) {
-                                    String imageUrl = attachment.getUrl();
-                                    System.out.println("[Perceptor] Imagen detectada en #" + canal
-                                            + " de " + autor + ": " + imageUrl);
-                                    try {
-                                        sendImageToVisionAgent(imageUrl, event.getMessageId(), event.getChannel().getId());
-                                    } catch (Exception e) {
-                                        System.err.println("Error enviando imagen a AgenteVisualizador: " + e.getMessage());
-                                    }
-                                }
-                            });
-
-                            if (contenido != null && !contenido.isBlank()) {
-                                try {
-                                    sendTextToAnalystAgent(contenido, event.getMessageId(), event.getChannel().getId());
-                                } catch (Exception e) {
-                                    System.err.println("Error enviando texto a AgenteAnalista: " + e.getMessage());
-                                }
-                            }
-                        }
-                    })
-                    .build();
-        } catch (Exception e) {
-            System.err.println("Error iniciando JDA en AgentePerceptor: " + e.getMessage());
-        }
+    String token = loadTokenFromFile(TOKEN_ENV);
+    if (token == null || token.isBlank()) {
+      System.err.println("No se encontró token de Discord. JDA no se iniciará.");
+      return;
     }
 
-    @Override
-    protected void takeDown() {
-        if (jda != null) {
-            jda.shutdown();
-        }
-        try {
-            DFService.deregister(this);
-        } catch (FIPAException e) {
-            // Ignorar
-        }
-        System.out.println("AgentePerceptor detenido.");
-    }
+    try {
+      jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+          .addEventListeners(new ListenerAdapter() {
+            @Override
+            public void onMessageReceived(MessageReceivedEvent event) {
 
-    private String loadTokenFromFile(String filename) {
-        File env = new File(filename);
-        if (!env.exists()) {
-            File alt = new File(getProjectRoot(), filename);
-            if (alt.exists()) {
-                env = alt;
-            } else {
-                return null;
-            }
-        }
+              if (event.getAuthor().isBot()) {
+                return;
+              }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(env))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.startsWith(DISCORD_TOKEN_KEY + "=")) {
-                    return line.substring((DISCORD_TOKEN_KEY + "=").length()).trim();
+              String autor = event.getAuthor().getAsTag();
+              String canal = event.getChannel().getName();
+              String contenido = null;
+              try {
+                contenido = event.getMessage().getContentRaw();
+              } catch (Exception ignore) {
+              }
+
+              System.out.println("[Perceptor] Mensaje recibido en #" + canal + " de " + autor + ": "
+                  + (contenido == null ? "" : contenido));
+
+              event.getMessage().getAttachments().forEach(attachment -> {
+                if (attachment.isImage()) {
+                  String imageUrl = attachment.getUrl();
+                  System.out.println("[Perceptor] Imagen detectada en #" + canal + " de " + autor + ": " + imageUrl);
+                  try {
+                    sendImageToVisionAgent(imageUrl, event.getMessageId(), event.getChannel().getId());
+                  } catch (Exception e) {
+                    System.err.println("Error enviando imagen a AgenteVisualizador: " + e.getMessage());
+                  }
                 }
+              });
+
+              if (contenido != null && !contenido.isBlank()) {
+                try {
+                  sendTextToAnalystAgent(contenido, event.getMessageId(), event.getChannel().getId());
+                } catch (Exception e) {
+                  System.err.println("Error enviando texto a AgenteAnalista: " + e.getMessage());
+                }
+              }
             }
-        } catch (IOException e) {
-            return null;
-        }
+          }).build();
+    } catch (Exception e) {
+      System.err.println("Error iniciando JDA en AgentePerceptor: " + e.getMessage());
+    }
+  }
+
+  @Override
+  protected void takeDown() {
+    if (jda != null) {
+      jda.shutdown();
+    }
+    try {
+      DFService.deregister(this);
+    } catch (FIPAException e) {
+      // Ignorar
+    }
+    System.out.println("AgentePerceptor detenido.");
+  }
+
+  private String loadTokenFromFile(String filename) {
+    File env = new File(filename);
+    if (!env.exists()) {
+      File alt = new File(getProjectRoot(), filename);
+      if (alt.exists()) {
+        env = alt;
+      } else {
         return null;
+      }
     }
 
-    private File getProjectRoot() {
-        return new File(System.getProperty("user.dir"));
-    }
-
-    private void sendImageToVisionAgent(String imageUrl, String messageId, String channelId) throws IOException, FIPAException {
-        DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId, channelId);
-
-        DFAgentDescription template = new DFAgentDescription();
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType(VISION_SERVICE_TYPE);
-        template.addServices(sd);
-
-        DFAgentDescription[] agents = DFService.search(this, template);
-        if (agents == null || agents.length == 0) {
-            throw new RuntimeException("No se encontró AgenteVisualizador con el servicio '" + VISION_SERVICE_TYPE + "'.");
+    try (BufferedReader reader = new BufferedReader(new FileReader(env))) {
+      String line;
+      while ((line = reader.readLine()) != null) {
+        line = line.trim();
+        if (line.startsWith(DISCORD_TOKEN_KEY + "=")) {
+          return line.substring((DISCORD_TOKEN_KEY + "=").length()).trim();
         }
+      }
+    } catch (IOException e) {
+      return null;
+    }
+    return null;
+  }
 
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(agents[0].getName());
-        msg.setContentObject(discordMessage);
-        send(msg);
-        System.out.println("[Perceptor] Enviado mensaje a AgenteVisualizador: " + imageUrl);
+  private File getProjectRoot() {
+    return new File(System.getProperty("user.dir"));
+  }
+
+  private void sendImageToVisionAgent(String imageUrl, String messageId, String channelId)
+      throws IOException, FIPAException {
+    DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId, channelId);
+
+    DFAgentDescription template = new DFAgentDescription();
+    ServiceDescription sd = new ServiceDescription();
+    sd.setType(VISION_SERVICE_TYPE);
+    template.addServices(sd);
+
+    DFAgentDescription[] agents = DFService.search(this, template);
+    if (agents == null || agents.length == 0) {
+      throw new RuntimeException("No se encontró AgenteVisualizador con el servicio '" + VISION_SERVICE_TYPE + "'.");
     }
 
-    private void sendTextToAnalystAgent(String text, String messageId, String channelId) throws IOException, FIPAException {
-        DiscordMessage discordMessage = new DiscordMessage(text, messageId, channelId);
+    ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+    msg.addReceiver(agents[0].getName());
+    msg.setContentObject(discordMessage);
+    send(msg);
+    System.out.println("[Perceptor] Enviado mensaje a AgenteVisualizador: " + imageUrl);
+  }
 
-        DFAgentDescription template = new DFAgentDescription();
-        ServiceDescription sd = new ServiceDescription();
-        sd.setType(ANALISTA_SERVICE_TYPE);
-        template.addServices(sd);
+  private void sendTextToAnalystAgent(String text, String messageId, String channelId)
+      throws IOException, FIPAException {
+    DiscordMessage discordMessage = new DiscordMessage(text, messageId, channelId);
 
-        DFAgentDescription[] agents = DFService.search(this, template);
-        if (agents == null || agents.length == 0) {
-            throw new RuntimeException("No se encontró AgenteAnalista con el servicio '" + ANALISTA_SERVICE_TYPE + "'.");
-        }
+    DFAgentDescription template = new DFAgentDescription();
+    ServiceDescription sd = new ServiceDescription();
+    sd.setType(ANALISTA_SERVICE_TYPE);
+    template.addServices(sd);
 
-        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-        msg.addReceiver(agents[0].getName());
-        msg.setContentObject(discordMessage);
-        send(msg);
-        System.out.println("[Perceptor] Enviado texto a AgenteAnalista: " + text);
+    DFAgentDescription[] agents = DFService.search(this, template);
+    if (agents == null || agents.length == 0) {
+      throw new RuntimeException("No se encontró AgenteAnalista con el servicio '" + ANALISTA_SERVICE_TYPE + "'.");
     }
+
+    ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+    msg.addReceiver(agents[0].getName());
+    msg.setContentObject(discordMessage);
+    send(msg);
+    System.out.println("[Perceptor] Enviado texto a AgenteAnalista: " + text);
+  }
 
 }

@@ -42,7 +42,8 @@ public class AgenteVisualizador extends Agent {
     this.pythonExecutable = firstNonBlank(py, System.getenv(PYTHON_ENV_VAR), DEFAULT_PYTHON_EXECUTABLE);
 
     if (py == null || py.isBlank()) {
-      System.out.println("[AgenteVisualizador] VISION_PYTHON_PATH no está definido; usando '" + this.pythonExecutable + "'.");
+      System.out
+          .println("[AgenteVisualizador] VISION_PYTHON_PATH no está definido; usando '" + this.pythonExecutable + "'.");
     }
 
     registerService(); // Registrar el servicio y darlo de alta
@@ -61,9 +62,9 @@ public class AgenteVisualizador extends Agent {
         try {
           DiscordMessage discordMessage = resolveDiscordMessage(msg);
 
-          System.out.println("[AgenteVisualizador] Mensaje recibido -> id: " + discordMessage.getId()
-              + " | mensaje(url): " + discordMessage.getMensaje()
-              + " | detecciones-previas: " + discordMessage.getDetecciones());
+          System.out
+              .println("[AgenteVisualizador] Mensaje recibido -> id: " + discordMessage.getId() + " | mensaje(url): "
+                  + discordMessage.getMensaje() + " | detecciones-previas: " + discordMessage.getDetecciones());
 
           String result = analyzeWithVisionModel(discordMessage.getMensaje());
           List<DiscordMessage.Detecciones> detecciones = extractDetections(result);
@@ -71,7 +72,6 @@ public class AgenteVisualizador extends Agent {
             discordMessage.agregarDetecciones(deteccion);
           }
           sendToClassifier(discordMessage);
-
 
         } catch (Exception exception) {
           System.err.println("Error procesando mensaje: " + exception.getMessage());
@@ -107,7 +107,6 @@ public class AgenteVisualizador extends Agent {
     }
   }
 
-
   private DiscordMessage resolveDiscordMessage(ACLMessage msg) throws UnreadableException {
     if (msg.getContentObject() instanceof DiscordMessage discordMessage) {
       return discordMessage;
@@ -122,12 +121,7 @@ public class AgenteVisualizador extends Agent {
       scriptPath = Path.of(System.getProperty("user.dir")).resolve(scriptPath);
     }
 
-    ProcessBuilder processBuilder = new ProcessBuilder(
-      this.pythonExecutable,
-      scriptPath.toString(),
-      "--url",
-      imageUrl);
-
+    ProcessBuilder processBuilder = new ProcessBuilder(this.pythonExecutable, scriptPath.toString(), "--url", imageUrl);
 
     processBuilder.redirectErrorStream(true);
 
@@ -190,7 +184,6 @@ public class AgenteVisualizador extends Agent {
     return categories;
   }
 
-
   private static Map<String, String> loadConfig(Path file) {
     Map<String, String> values = new HashMap<>();
 
@@ -230,10 +223,9 @@ public class AgenteVisualizador extends Agent {
   }
 
   private void sendToClassifier(DiscordMessage discordMessage) throws IOException, FIPAException {
-    
-    System.out.println("[AgenteVisualizador] Contenido a enviar -> id: " + discordMessage.getId()
-        + " | url: " + discordMessage.getMensaje()
-        + " | detecciones: " + discordMessage.getDetecciones());
+
+    System.out.println("[AgenteVisualizador] Contenido a enviar -> id: " + discordMessage.getId() + " | url: "
+        + discordMessage.getMensaje() + " | detecciones: " + discordMessage.getDetecciones());
 
     DFAgentDescription template = new DFAgentDescription();
     ServiceDescription service = new ServiceDescription();
@@ -247,7 +239,6 @@ public class AgenteVisualizador extends Agent {
 
     // Log del contenido que se enviará
     System.out.println("[AgenteVisualizador] Preparando envío al clasificador: receiver=" + agents[0].getName());
-
 
     ACLMessage message = new ACLMessage(ACLMessage.INFORM);
     message.addReceiver(agents[0].getName());
