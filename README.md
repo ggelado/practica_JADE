@@ -160,4 +160,14 @@ Grupo 15: Jiade Zheng , Gonzalo Gelado Rodríguez, Alejandra González Gila, Fra
 
 ## Declaración de uso de IA
 
-*(Por redactar: describir para qué se ha usado la IA.)*
+### Respecto al Modelo de Visión
+
+Debido a que la utilización de modelos de IA no es parte del contenido de esta asignatura, los scripts de python utilizados para el Agente de Visión han sido cocreados con modelos generativos de lenguaje, concretamente el modelo 4o de OpenAI (ChatGPT). Este modelo ha sido utilizado para la redacción del código fuente de python, siguiendo los requerimientos e instrucciones facilitadas por nosotros. En concreto los requisitos funcionales fueron:
+
+- Hay vectores de pesos (YOLO) en el directorio model, ficheros con extensión .pt
+- Se consideran detecciones positivas las siguientes etiquetas (lista de etiquetas de acuerdo a la documentación de cada uno de los modelos)
+- Quiero un código python que reciba como parámetro por la línea de orden la URL de una imagen.
+- Descargará esa imagen y procederá a analizarla con todos los modelos disponibles, guardando las etiquetas y clasificaciones de los modelos.
+- Devolverá por salida estándar únicamente la lista de detecciones positivas, separadas por comas, en una sola línea.
+
+La búsqueda de los vectores de pesos, la tecnología a utilizar... son fruto de la investigación de los autores.
