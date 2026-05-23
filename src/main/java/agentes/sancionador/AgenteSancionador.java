@@ -8,17 +8,17 @@ import java.io.IOException;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
-import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 import model.DiscordMessage;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class AgenteSancionador extends Agent {
 
@@ -37,6 +37,7 @@ public class AgenteSancionador extends Agent {
     // Obtener token e id del canal
     String token = loadValueFromEnv(DISCORD_TOKEN_KEY);
     this.safeImageUrl = loadValueFromEnv("SAFE_IMAGE_URL");
+    // Imagen de fallback para cuando no esté configurada SAFE_IMAGE_URL en token.env
     if (this.safeImageUrl == null || this.safeImageUrl.isBlank()) {
       this.safeImageUrl = "https://images.openai.com/static-rsc-4/KHGu71UfH_dMNlhUal-896Wz58oxmodI2Ho_tcS5ZNy-Sz9Dr8KWUF1rB3eATUCb8RcTaMOtcKAZ7lR6-U_2Zw8oTCgajaJj4iIQ2z6mASBFylLLi7Z3XfgTXnIp2XvSRtKaJMbiQvbnasXApZ_kILMSBhVkexXMhI2EK2Z_vjvBL_qVafG7L3MxpDlYmbsD?purpose=fullsize";
     }
@@ -117,7 +118,7 @@ public class AgenteSancionador extends Agent {
       return;
     }
 
-    // Se elimina el mensaje del canal y luego publicamos imagen bonita
+    // Se elimina el mensaje del canal y luego se publica una imagen bonita en su lugar
     channel.deleteMessageById(msgId).queue(success -> {
       System.out.println("[Agente Sancionador] Mensaje eliminado -> id: " + msgId);
       enviarImagenBonita(channel, chId);

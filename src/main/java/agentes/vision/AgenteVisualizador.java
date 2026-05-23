@@ -30,7 +30,7 @@ public class AgenteVisualizador extends Agent {
   private static final String PYTHON_ENV_VAR = "VISION_PYTHON_PATH";
   private static final String DEFAULT_PYTHON_EXECUTABLE = "python";
 
-  // Valor resuelto en setup()
+  // El ejecutable de Python se resuelve en setup() después de cargar la configuración
   private String pythonExecutable;
 
   @Override
@@ -121,8 +121,10 @@ public class AgenteVisualizador extends Agent {
       scriptPath = Path.of(System.getProperty("user.dir")).resolve(scriptPath);
     }
 
+    // No hay bindings Java para YOLO, así que llamamos al script Python como subproceso
     ProcessBuilder processBuilder = new ProcessBuilder(this.pythonExecutable, scriptPath.toString(), "--url", imageUrl);
 
+    // Mezclamos stderr con stdout para capturar también los mensajes de error del script en el mismo reader
     processBuilder.redirectErrorStream(true);
 
     Process process = processBuilder.start();
@@ -141,7 +143,7 @@ public class AgenteVisualizador extends Agent {
     String fullOutput = output.toString();
     String result = fullOutput.trim();
 
-    // La última línea de la salida contiene los resultados
+    // Tomamos la última línea no vacía porque Python imprime logs de carga del modelo antes del resultado real
     String lastLine = null;
     String[] lines = fullOutput.split("\r?\n");
     for (int i = lines.length - 1; i >= 0; i--) {
@@ -176,6 +178,7 @@ public class AgenteVisualizador extends Agent {
     for (String token : rawCategories.split(",")) {
       String category = token.trim();
       DiscordMessage.Detecciones deteccion = DiscordMessage.Detecciones.fromLabel(category);
+      // fromLabel devuelve null para etiquetas desconocidas o "safe", las ignoramos
       if (deteccion != null) {
         categories.add(deteccion);
       }
@@ -200,6 +203,7 @@ public class AgenteVisualizador extends Agent {
           continue;
         }
 
+        // Límite 2 para que los valores que contengan '=' (p.ej. tokens en base64) no se corten
         String[] parts = trimmed.split("=", 2);
         values.put(parts[0].trim(), parts[1].trim());
       }

@@ -25,6 +25,7 @@ public class AgentePerceptor extends Agent {
   private static final String VISION_SERVICE_TYPE = "vision-safety";
   private static final String ANALISTA_SERVICE_TYPE = "analista-texto";
 
+  // transient porque JDA no implementa Serializable y JADE puede intentar serializar el agente
   private transient JDA jda;
 
   @Override
@@ -43,6 +44,7 @@ public class AgentePerceptor extends Agent {
             @Override
             public void onMessageReceived(MessageReceivedEvent event) {
 
+              // Ignoramos mensajes de bots para evitar que el sistema entre en bucle con sus propias respuestas
               if (event.getAuthor().isBot()) {
                 return;
               }
@@ -53,6 +55,7 @@ public class AgentePerceptor extends Agent {
               try {
                 contenido = event.getMessage().getContentRaw();
               } catch (Exception ignore) {
+                // En algunos tipos de canal getContentRaw() puede lanzar excepción; lo dejamos como null
               }
 
               System.out.println("[Perceptor] Mensaje recibido en #" + canal + " de " + autor + ": "
@@ -130,6 +133,7 @@ public class AgentePerceptor extends Agent {
       throws IOException, FIPAException {
     DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId, channelId);
 
+    // Buscamos en el DF qué agente ofrece el servicio de visión para no hardcodear su nombre
     DFAgentDescription template = new DFAgentDescription();
     ServiceDescription sd = new ServiceDescription();
     sd.setType(VISION_SERVICE_TYPE);
@@ -151,6 +155,7 @@ public class AgentePerceptor extends Agent {
       throws IOException, FIPAException {
     DiscordMessage discordMessage = new DiscordMessage(text, messageId, channelId);
 
+    // Mismo patrón que con el agente de visión: consultamos el DF en lugar de hardcodear el nombre del agente
     DFAgentDescription template = new DFAgentDescription();
     ServiceDescription sd = new ServiceDescription();
     sd.setType(ANALISTA_SERVICE_TYPE);

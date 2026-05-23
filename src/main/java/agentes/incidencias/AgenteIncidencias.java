@@ -93,9 +93,7 @@ public class AgenteIncidencias extends Agent {
     });
   }
 
-  /**
-   * Buscar al adminy mandarle un mensaje
-   */
+  // Intentamos enviar la alerta primero a un canal de texto; si el ID no corresponde a un canal, lo tratamos como usuario y mandamos DM
   private void enviarMensajePrivadoAdmin(DiscordMessage info) {
     if (jda == null || adminId == null)
       return;

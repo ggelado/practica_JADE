@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+// JADE serializa los objetos que se pasan entre agentes con setContentObject(), así que la clase tiene que ser Serializable
 public class DiscordMessage implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -23,6 +24,7 @@ public class DiscordMessage implements Serializable {
         return null;
       }
 
+      // Normalizamos para aceptar variantes: minúsculas y guión bajo tratado igual que guión (p.ej. self_harm == self-harm)
       String normalized = value.trim().toLowerCase().replace('_', '-');
       switch (normalized) {
       case "blood":
@@ -123,6 +125,7 @@ public class DiscordMessage implements Serializable {
   }
 
   public Collection<Detecciones> getDetecciones() {
+    // Devolvemos una copia inmutable para que nadie pueda modificar la lista interna por accidente
     return Collections.unmodifiableList(new ArrayList<>(findings));
   }
 

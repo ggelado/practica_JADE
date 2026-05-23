@@ -73,6 +73,7 @@ public class AgenteClasificador extends Agent {
   }
 
   private String clasificarMensaje(DiscordMessage msg) {
+    // Creamos un modelo hijo sobre el base cargado en setup(); así cada mensaje tiene su propio grafo de inferencia
     OntModel model = ModelFactory.createOntologyModel(PelletReasonerFactory.THE_SPEC, modeloBase);
 
     OntClass clsMensaje = model.getOntClass(NS + "Mensaje");
@@ -81,6 +82,7 @@ public class AgenteClasificador extends Agent {
       return "SinClasificar";
     }
 
+    // Representamos este mensaje como un individuo OWL de la clase Mensaje para que Pellet pueda razonar sobre él
     Individual individuo = model.createIndividual(NS + "msg_" + msg.getId(), clsMensaje);
 
     ObjectProperty tieneDeteccion = model.getObjectProperty(NS + "tieneDeteccion");
@@ -107,7 +109,8 @@ public class AgenteClasificador extends Agent {
       return "SinClasificar";
     }
 
-    // Recoger todos los niveles inferidos y quedarse con el más grave
+    // tieneNivel no está asertado en el RDF, Pellet lo infiere a partir de las detecciones que hemos añadido
+    // Recogemos todos los niveles inferidos y nos quedamos con el más grave
     org.apache.jena.rdf.model.NodeIterator nit = individuo.listPropertyValues(tieneNivel);
     String nivelMasGrave = "SinClasificar";
     while (nit.hasNext()) {
@@ -126,6 +129,7 @@ public class AgenteClasificador extends Agent {
     return pesoActual >= pesoNuevo ? actual : nuevo;
   }
 
+  // Asignamos un peso numérico a cada nivel para poder compararlos; cuanto mayor, más grave
   private int getPeso(String nivel) {
     switch (nivel) {
     case "riesgoCritico":
@@ -145,6 +149,7 @@ public class AgenteClasificador extends Agent {
     }
   }
 
+  // Traduce cada valor del enum a la clase OWL correspondiente definida en la ontología
   private OntClass getClaseDeteccion(OntModel model, DiscordMessage.Detecciones d) {
     switch (d) {
     case GUN:
