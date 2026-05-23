@@ -1,23 +1,12 @@
 #!/bin/bash
 
-# Script lanzador de JADE
-PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$PROJECT_DIR"
+cd "$(dirname "$0")"
+AGENTS="AgenteVisualizador:agentes.vision.AgenteVisualizador;AgentePerceptor:agentes.percepcion.AgentePerceptor;AgenteClasificador:agentes.clasificador.AgenteClasificador;AgenteIncidencias:agentes.incidencias.AgenteIncidencias;AgenteSancionador:agentes.sancionador.AgenteSancionador;AgenteAnalista:agentes.analista.AgenteAnalista"
 
-# Construir classpath con todas las dependencias
-CLASSPATH="target/classes:lib/jade.jar:lib/commons-codec-1.3.jar"
+mvn package || true
+mvn dependency:copy-dependencies || true
 
-for jar in target/lib/*.jar; do
-    if [ -f "$jar" ]; then
-        CLASSPATH="$CLASSPATH:$jar"
-    fi
-done
+CP="target/classes:lib/*.jar"
+[ -d target/dependency ] && CP="$CP:target/dependency/*"
 
-# Lanzar JADE
-java -cp "$CLASSPATH" jade.Boot -gui \
-    AgenteVisualizador:agentes.vision.AgenteVisualizador \
-    AgentePerceptor:agentes.percepcion.AgentePerceptor \
-    AgenteClasificador:agentes.clasificador.AgenteClasificador \
-    AgenteIncidencias:agentes.incidencias.AgenteIncidencias \
-    AgenteSancionador:agentes.sancionador.AgenteSancionador \
-    AgenteAnalista:agentes.analista.AgenteAnalista
+exec java -cp "$CP" jade.Boot -gui "$AGENTS" "$@"
