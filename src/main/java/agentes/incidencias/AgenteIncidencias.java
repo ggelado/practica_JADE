@@ -97,11 +97,28 @@ public class AgenteIncidencias extends Agent {
   private void enviarMensajePrivadoAdmin(DiscordMessage info) {
     if (jda == null || adminId == null)
       return;
+    
+    // Decidimos si el contenido es una imagen (URL) o texto para formatearlo distinto
+    String contenido = info.getMensaje();
+    String contenidoFormateado = "||" + contenido + "||";
+    
+    // Resolvemos el nombre del canal a partir del channelId
+    String nombreCanal;
+    try {
+        var canal = jda.getTextChannelById(info.getChannelId());
+        nombreCanal = (canal != null) ? "#" + canal.getName() : "Canal ID: " + info.getChannelId();
+    } catch (Exception e) {
+        nombreCanal = "Canal ID: " + info.getChannelId();
+    }
 
     // Buscamos al usuario
-    String textoAlerta = "🚨 **[ALERTA DE SEGURIDAD]** 🚨\n" + "Se ha detectado una infracción en el servidor.\n"
-        + "**ID del Mensaje:** " + info.getId() + "\n" + "**Tipos de contenido detectados:** " + info.getDetecciones()
-        + "\n" + "Por favor, revisa el canal de moderación.";
+    String textoAlerta = "🚨 **[ALERTA DE SEGURIDAD]** 🚨\n" 
+    + "Se ha detectado una infracción en el servidor.\n"
+    + "**Usuario:** " + info.getAutor() + "\n"
+    + "**Canal:** " + nombreCanal + "\n"
+    + "**ID del Mensaje:** " + info.getId() + "\n" 
+    + "**Contenido del mensaje:** " + contenidoFormateado + "\n"
+    + "**Tipos de contenido detectados:** " + info.getDetecciones() + "\n";
 
     // Intentar como canal (ID de canal)
     TextChannel channel = jda.getTextChannelById(adminId);

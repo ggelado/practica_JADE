@@ -66,7 +66,7 @@ public class AgentePerceptor extends Agent {
                   String imageUrl = attachment.getUrl();
                   System.out.println("[Perceptor] Imagen detectada en #" + canal + " de " + autor + ": " + imageUrl);
                   try {
-                    sendImageToVisionAgent(imageUrl, event.getMessageId(), event.getChannel().getId());
+                    sendImageToVisionAgent(imageUrl, event.getMessageId(), event.getChannel().getId(), event.getAuthor().getAsTag());
                   } catch (Exception e) {
                     System.err.println("Error enviando imagen a AgenteVisualizador: " + e.getMessage());
                   }
@@ -75,7 +75,7 @@ public class AgentePerceptor extends Agent {
 
               if (contenido != null && !contenido.isBlank()) {
                 try {
-                  sendTextToAnalystAgent(contenido, event.getMessageId(), event.getChannel().getId());
+                  sendTextToAnalystAgent(contenido, event.getMessageId(), event.getChannel().getId(), event.getAuthor().getAsTag());
                 } catch (Exception e) {
                   System.err.println("Error enviando texto a AgenteAnalista: " + e.getMessage());
                 }
@@ -129,9 +129,9 @@ public class AgentePerceptor extends Agent {
     return new File(System.getProperty("user.dir"));
   }
 
-  private void sendImageToVisionAgent(String imageUrl, String messageId, String channelId)
+  private void sendImageToVisionAgent(String imageUrl, String messageId, String channelId, String autor)
       throws IOException, FIPAException {
-    DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId, channelId);
+    DiscordMessage discordMessage = new DiscordMessage(imageUrl, messageId, channelId, autor);
 
     // Buscamos en el DF qué agente ofrece el servicio de visión para no hardcodear su nombre
     DFAgentDescription template = new DFAgentDescription();
@@ -151,9 +151,9 @@ public class AgentePerceptor extends Agent {
     System.out.println("[Perceptor] Enviado mensaje a AgenteVisualizador: " + imageUrl);
   }
 
-  private void sendTextToAnalystAgent(String text, String messageId, String channelId)
+  private void sendTextToAnalystAgent(String text, String messageId, String channelId, String autor)
       throws IOException, FIPAException {
-    DiscordMessage discordMessage = new DiscordMessage(text, messageId, channelId);
+    DiscordMessage discordMessage = new DiscordMessage(text, messageId, channelId, autor);
 
     // Mismo patrón que con el agente de visión: consultamos el DF en lugar de hardcodear el nombre del agente
     DFAgentDescription template = new DFAgentDescription();
