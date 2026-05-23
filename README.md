@@ -1,51 +1,148 @@
-# Sistema multiagente para la censura de mensajes.
+# Sistema multiagente para la moderación de mensajes en Discord
 
-Este repositorio contiene la implementación de un sistema multiagente (SMA) desarrollado en Java utilizando el framework JADE. El proyecto consiste en un moderador inteligente para servidores de Discord. Su objetivo principal es filtrar contenido visual inapropiado y detectar conductas de riesgo analizando los mensajes, automatizando parte del trabajo de administración del servidor.
+Este repositorio contiene la implementación de un sistema multiagente (SMA) desarrollado en Java utilizando el framework JADE. El proyecto consiste en un moderador inteligente para servidores de Discord que filtra contenido inapropiado en imágenes y analiza el texto de los mensajes para detectar conductas de riesgo, automatizando parte del trabajo de administración del servidor.
 
 ## Arquitectura del Sistema
 
-La arquitectura se divide en cuatro módulos principales que se corresponden con los bloques temáticos de la asignatura. Se ha optado por un diseño pragmático que asegura la viabilidad técnica y el cumplimiento de los requisitos de comunicación entre agentes (DF, mensajería ACL y filtros bloqueantes).
+La arquitectura se divide en seis agentes que se corresponden con los bloques temáticos de la asignatura. Los agentes se comunican entre sí mediante mensajes ACL y se localizan a través del Directory Facilitator (DF) de JADE.
 
-### 1. Recuperación de Información (Agente Perceptor)
-Este módulo se encarga de la captura de datos desde la plataforma externa.
+Consultar UML.
 
-* **Implementación:** El agente perceptor (`DiscordListener`) utiliza la librería JDA (Java Discord API) para interactuar con Discord.
-* **Optimización:** Para respetar las cuotas de la API, el agente restringe su escucha a los eventos de creación de mensajes (`on_message`), extrayendo el contenido de texto y las URLs de los archivos adjuntos en tiempo real.
+### 1. Recuperación de Información — AgentePerceptor
+Se conecta a Discord mediante JDA y escucha todos los mensajes del servidor. Por cada mensaje:
+- Si contiene imágenes, las envía al **AgenteVisualizador**.
+- Si contiene texto, lo envía al **AgenteAnalista**.
 
-### 2. Ontologías y Representación del Conocimiento (Agente Clasificador)
-Proporciona la base semántica para que el sistema categorice correctamente los eventos.
+### 2. Percepción Computacional — AgenteVisualizador
+Recibe la URL de una imagen y la analiza ejecutando un script Python con modelos YOLO preentrenados. Detecta: armas, violencia, sangre, peleas y simbología nazi. Envía las detecciones al **AgenteClasificador**.
 
-* **Implementación:** La jerarquía ontológica se ha diseñado mediante Protégé, exportando el modelo a formato OWL. El agente clasificador utiliza la librería Apache Jena para cargar la ontología y realizar consultas sobre las clases definidas (ej. `Conducta_Hostil`, `Riesgo_Depresivo`, `Contenido_Explicito`).
-* **Lógica de evaluación:** Los reportes de los agentes de análisis se mapean contra la ontología para deducir la gravedad de la infracción y determinar el protocolo de actuación.
+Modelos utilizados (en `visionModel/models/`):
+- Simbología nazi: [yolo11s-cls-nazi-symbols](https://huggingface.co/zhiwei2017/yolo11s-cls-nazi-symbols)
+- Contenido NSFW: [nsfw_image_detection](https://huggingface.co/Falconsai/nsfw_image_detection)
+- Violencia y peleas: [Fight-Violence-detection-yolov8](https://github.com/Musawer1214/Fight-Violence-detection-yolov8)
 
-### 3. Descubrimiento de Conocimiento (Agente Analista)
-Realiza el procesamiento del texto para identificar comportamientos anómalos o tóxicos.
+### 3. Descubrimiento de Conocimiento — AgenteAnalista
+Recibe el texto de un mensaje y lo clasifica mediante una llamada a la API de Gemini. Obtiene etiquetas como `toxic`, `spam`, `depression`, `self_harm`, etc. Envía las detecciones al **AgenteClasificador**.
 
-* **Implementación:** Ante la inviabilidad de entrenar un modelo de Deep Learning nativo en Java para esta práctica, el agente implementa un enfoque de análisis de sentimientos basado en lexicón (diccionarios). Evalúa la polaridad y el contenido de los mensajes buscando patrones clave asociados a discursos de odio o indicadores de vulnerabilidad emocional.
-* **Generación de alertas:** Si el umbral de criticidad supera lo establecido, el agente genera un reporte de contexto y notifica a los administradores humanos mediante mensaje directo, priorizando la supervisión humana en casos de salud mental.
+### 4. Ontologías y Representación del Conocimiento — AgenteClasificador
+Carga la ontología `ontologia.rdf` (diseñada en Protégé, formato OWL/RDF) y usa el razonador Pellet (vía Apache Jena) para inferir el nivel de riesgo de cada mensaje a partir de sus detecciones. Según el nivel inferido:
 
-### 4. Percepción Computacional (Agente de Visión)
-Analiza las imágenes adjuntas para evitar la distribución de contenido prohibido.
+| Nivel | Acción |
+|---|---|
+| `riesgoCritico` / `riesgoGrave` | Eliminar mensaje + alertar admin |
+| `alertaSaludMental` | Alertar admin (sin borrar) |
+| `riesgoModerado` | Eliminar mensaje |
+| `riesgoLeve` | Solo log |
 
-* **Implementación:** Para garantizar precisión y rendimiento, el agente `VisionAnalyzer` delega el procesamiento pesado consumiendo una API de visión externa (como Google Cloud Vision / SafeSearch). El agente extrae la URL de la imagen de Discord y realiza la petición HTTP.
-* **Acción:** El agente procesa el JSON de respuesta. Si los índices de probabilidad de contenido explícito o simbología de odio son altos, se coordina mediante mensajes ACL con el `DiscordListener` para eliminar el mensaje original y notifica al Agente Clasificador para que registre la infracción.
+### 5. Sanción — AgenteSancionador
+Recibe la orden de borrar un mensaje, lo elimina del canal de Discord y publica una imagen de reemplazo configurable.
 
-* **Respuesta visual:** Cuando se detecta contenido inapropiado, el sistema puede publicar en el canal original una imagen bonita configurable mediante `SAFE_IMAGE_URL` en `token.env` para suavizar la intervención del bot.
+### 6. Gestión de Incidencias — AgenteIncidencias
+Notifica al administrador del servidor enviando un mensaje a un canal o por DM, según lo configurado en `token.env`.
 
-## Requisitos e Instalación
+---
 
-*(Por redactar)*
+## Requisitos previos
 
-## Instrucciones de Ejecución
+- **Java 17** o superior
+- **Maven 3.6** o superior
+- **Python 3.8** o superior
+- Una cuenta de Discord con un bot creado en el [Portal de Desarrolladores](https://discord.com/developers/applications)
+- Una clave de API de Gemini (obtenible en [Google AI Studio](https://aistudio.google.com/))
 
-Ejecutar
+---
 
+## Preparación del entorno
+
+### 1. Configurar el entorno virtual de Python (modelo de visión)
+
+El script Python que analiza imágenes necesita sus dependencias en un entorno virtual. Ejecutar desde la raíz del proyecto:
+
+**Windows (PowerShell o cmd):**
 ```bash
-./run-jade.sh
+cd visionModel
+python -m venv ./venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
+**Linux / macOS:**
+```bash
+cd visionModel
+python -m venv ./venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
+
+### 2. Crear el archivo `token.env`
+
+Crear un archivo llamado `token.env` en la **raíz del proyecto** (no se sube al repositorio). Contenido:
+
+```env
+DISCORD_TOKEN=el_token_de_tu_bot_de_discord
+ADMIN_DISCORD_ID=id_del_canal_o_usuario_administrador
+SAFE_IMAGE_URL=https://url-de-imagen-de-reemplazo.jpg
+GEMINI_API_KEY=tu_clave_de_api_de_gemini
+
+# Ruta al ejecutable de Python del entorno virtual creado en el paso anterior:
+# Windows:
+VISION_PYTHON_PATH=visionModel/venv/Scripts/python
+# Linux / macOS:
+# VISION_PYTHON_PATH=visionModel/venv/bin/python
+```
+
+> `ADMIN_DISCORD_ID` puede ser el ID de un canal de texto o el ID de un usuario. Si es un canal, el bot enviará la alerta allí; si es un usuario, la enviará por DM.
+
+### 3. Compilar el proyecto
+
+```bash
+mvn compile
+```
+
+Esto también descarga las dependencias Maven y las copia en `target/lib/`.
+
+---
+
+## Ejecución
+
+Usar la configuración de lanzamiento incluida en el repositorio: `runConfigurations/AgenteVisualizador.launch`. En VS Code, aparece en el panel **Run & Debug** como *AgenteVisualizador*. Hacer clic en el botón de play. En Eclipse, usar **Run As**.
+
+Al arrancar, la GUI de JADE se abrirá y se verán los seis agentes registrados en el DF. En la consola aparecerán mensajes de confirmación de cada agente.
+
+---
+
+## Estructura del proyecto
+
+```
+practica_JADE/
+├── src/main/java/
+│   ├── agentes/
+│   │   ├── percepcion/      AgentePerceptor
+│   │   ├── vision/          AgenteVisualizador
+│   │   ├── analista/        AgenteAnalista
+│   │   ├── clasificador/    AgenteClasificador
+│   │   ├── sancionador/     AgenteSancionador
+│   │   └── incidencias/     AgenteIncidencias
+│   └── model/
+│       └── DiscordMessage.java
+├── visionModel/
+│   ├── predict_image.py     Script de inferencia YOLO
+│   ├── models/              Pesos de los modelos (.pt)
+│   └── requirements.txt
+├── lib/                     JADE y commons-codec (locales)
+├── runConfigurations/
+│   └── AgenteVisualizador.launch    Configuración de lanzamiento para VS Code/Eclipse
+├── ontologia.rdf            Ontología OWL del sistema
+├── token.env                Credenciales (NO subir al repo)
+└── pom.xml
+```
+
+---
+
 ## Identificación del Grupo
-*(Grupo ns sabe todavía.)*
+
+Grupo 15: Jiade Zheng , Gonzalo Gelado Rodríguez, Alejandra González Gila, Francisco Criado Lacosta, María Trinidad Hirmas Astorga y Fabio Francisco Rosquete Cuellar
 
 ## Declaración de uso de IA
-*(Por redactar, describir para qué se ha usado la IA.)*
+
+*(Por redactar: describir para qué se ha usado la IA.)*
