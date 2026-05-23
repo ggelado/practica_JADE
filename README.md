@@ -113,6 +113,15 @@ Abrir el panel **Run & Debug** (`Ctrl+Shift+D`) y seleccionar **"JADE - Sistema 
 
 Usar la configuración `runConfigurations/AgenteVisualizador.launch`. Ir a **Run → Run Configurations...**, expandir *Java Application* y seleccionar *AgenteVisualizador*.
 
+### Terminal (Linux / macOS)
+
+El script `run-jade.sh` compila el proyecto, copia las dependencias y lanza JADE con todos los agentes en un solo paso:
+
+```bash
+chmod +x run-jade.sh   # solo la primera vez
+./run-jade.sh
+```
+
 Al arrancar, la GUI de JADE se abrirá y se verán los seis agentes registrados en el DF. En la consola aparecerán mensajes de confirmación de cada agente.
 
 ---
