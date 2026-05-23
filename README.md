@@ -105,7 +105,22 @@ Esto también descarga las dependencias Maven y las copia en `target/lib/`.
 
 ## Ejecución
 
-Usar la configuración de lanzamiento incluida en el repositorio: `runConfigurations/AgenteVisualizador.launch`. En VS Code, aparece en el panel **Run & Debug** como *AgenteVisualizador*. Hacer clic en el botón de play. En Eclipse, usar **Run As**.
+### VS Code
+
+Abrir el panel **Run & Debug** (`Ctrl+Shift+D`) y seleccionar **"JADE - Sistema Multiagente"** en el desplegable. Hacer clic en el play verde. Requiere el archivo `.vscode/launch.json` incluido en el repositorio.
+
+### Eclipse
+
+Usar la configuración `runConfigurations/AgenteVisualizador.launch`. Ir a **Run → Run Configurations...**, expandir *Java Application* y seleccionar *AgenteVisualizador*.
+
+### Terminal (Linux / macOS)
+
+El script `run-jade.sh` compila el proyecto, copia las dependencias y lanza JADE con todos los agentes en un solo paso:
+
+```bash
+chmod +x run-jade.sh   # solo la primera vez
+./run-jade.sh
+```
 
 Al arrancar, la GUI de JADE se abrirá y se verán los seis agentes registrados en el DF. En la consola aparecerán mensajes de confirmación de cada agente.
 

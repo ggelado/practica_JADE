@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "JADE - Sistema Multiagente",
+            "request": "launch",
+            "mainClass": "jade.Boot",
+            "args": "-gui AgenteVisualizador:agentes.vision.AgenteVisualizador;AgentePerceptor:agentes.percepcion.AgentePerceptor;AgenteClasificador:agentes.clasificador.AgenteClasificador;AgenteIncidencias:agentes.incidencias.AgenteIncidencias;AgenteSancionador:agentes.sancionador.AgenteSancionador;AgenteAnalista:agentes.analista.AgenteAnalista",
+            "classPaths": [
+                "${workspaceFolder}/target/classes",
+                "${workspaceFolder}/lib/jade.jar",
+                "${workspaceFolder}/lib/commons-codec-1.3.jar",
+                "${workspaceFolder}/target/lib/*"
+            ],
+            "projectName": "practica_JADE"
+        }
+    ]
+}
