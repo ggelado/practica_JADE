@@ -6,7 +6,54 @@ Este repositorio contiene la implementación de un sistema multiagente (SMA) des
 
 La arquitectura se divide en seis agentes que se corresponden con los bloques temáticos de la asignatura. Los agentes se comunican entre sí mediante mensajes ACL y se localizan a través del Directory Facilitator (DF) de JADE.
 
-Consultar UML.
+```puml
+@startuml
+!theme plain
+
+title NullToxic
+
+package "Discord / JDA" {
+  [Discord Server] as discord
+  [JDA] as jda
+}
+
+package "Recursos externos" {
+  [predict_image.py] as vision
+  [Gemini API] as gemini
+  [ontologia.rdf] as owl
+}
+
+package "JADE" {
+  [AgentePerceptor] as perceptor
+  [AgenteVisualizador] as visualizador
+  [AgenteAnalista] as analista
+  [AgenteClasificador] as clasificador
+  [AgenteSancionador] as sancionador
+  [AgenteIncidencias] as incidencias
+}
+
+discord --> jda : nuevo mensaje
+jda --> perceptor : MessageReceivedEvent
+
+perceptor --> visualizador : <<ACL INFORM>> imagen
+perceptor --> analista     : <<ACL INFORM>> texto
+
+visualizador --> clasificador : <<ACL INFORM>> detecciones
+analista     --> clasificador : <<ACL INFORM>> detecciones
+
+clasificador --> sancionador : <<ACL INFORM>> critico/grave/moderado
+clasificador --> incidencias : <<ACL INFORM>> critico/grave/saludMental
+
+sancionador --> discord : deleteMessage + sust.
+incidencias --> discord : mensaje a admin
+
+visualizador ..> vision 
+analista     ..> gemini : envía un prompt vía REST
+clasificador ..> owl    
+
+
+@enduml
+```
 
 ### 1. Recuperación de Información — AgentePerceptor
 Se conecta a Discord mediante JDA y escucha todos los mensajes del servidor. Por cada mensaje:
