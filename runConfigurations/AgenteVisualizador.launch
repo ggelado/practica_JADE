@@ -23,7 +23,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="jade.Boot"/>
     <listAttribute key="org.eclipse.jdt.launching.MODULEPATH"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="practica_JADE"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-gui AgenteVisualizador:agentes.vision.AgenteVisualizador;AgentePerceptor:agentes.percepcion.AgentePerceptor;AgenteClasificador:agentes.clasificador.AgenteClasificador;AgenteIncidencias:agentes.incidencias.AgenteIncidencias"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-gui AgenteVisualizador:agentes.vision.AgenteVisualizador;AgentePerceptor:agentes.percepcion.AgentePerceptor;AgenteClasificador:agentes.clasificador.AgenteClasificador;AgenteIncidencias:agentes.incidencias.AgenteIncidencias;AgenteSancionador:agentes.sancionador.AgenteSancionador;AgenteAnalista:agentes.analista.AgenteAnalista"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="practica_JADE"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
